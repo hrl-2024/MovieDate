@@ -32,7 +32,7 @@ Overview: social media platform focused on movies. Users can recommand a movie, 
         - [Get movie availablity platform](https://developers.themoviedb.org/3/movies/get-movie-watch-providers)
         - [Get movie trailers](https://developers.themoviedb.org/3/movies/get-movie-videos)
         - [Get movie reviews](https://developers.themoviedb.org/3/reviews/get-review-details)
-    - [Twillio]
+    - [Twillio](twillio.com)
         - [For chat server integration](https://www.twilio.com/blog/best-chat-api-messaging-sdk-platforms)
     - [Google Calendar](https://www.google.com/search?client=safari&rls=en&q=google+calendar+api&ie=UTF-8&oe=UTF-8)
         - Schedele user's Watch Party
