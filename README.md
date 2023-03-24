@@ -73,7 +73,7 @@ Full Wireframe and prototype avilable on [Figma](https://www.figma.com/file/64uX
 <img src="https://i.imgur.com/Yr8j216.png" width=250> <br>
 
 
-### User story 4: Profile Page
+### User story 5: Profile Page
 * Jen wants to check her profile page.
 * Jen clicks on the "Profile" tab.
 * There She can see her bio and edit the bio if she wants.
@@ -81,3 +81,22 @@ Full Wireframe and prototype avilable on [Figma](https://www.figma.com/file/64uX
 
 <img src="https://i.imgur.com/EXmnWNU.png" width=250>
 <img src="https://i.imgur.com/imw3qEZ.png" width=250><br>
+
+
+## User Story 3 TODO List:
+- [ ] Frontend: Translate design into code (10 hours)
+- [ ] Search Functionality (3 hour)
+    - [ ] Use MovieDataBase API to get result and display the replying JSON on screen
+        - [ ] API call and parse result for available streaming platform, trailer
+- [ ] Database (8 hours)
+    - [ ] Add Favorite Movies to a user
+    - [ ] Add movie to to-watch list
+    - [ ] Create Post/Review for a movie
+- [ ] share movie to friends by sending link (1 hour)
+
+|                | Frontend | Database | API    | Share  |
+|----------------|----------|----------|--------|--------|
+| Team Agreement | 11 hours | 6 hours  | 1 hour | 1 hour |
+| Ruihang        | 10 hours | 5 hours  | 1 hour | 1 hour |
+| Andrew         | 11 hours | 8 hours  | 1 hour | 1 hour |
+| Minos          | 12 hours | 6 hours  | 1 hour | 1 hour |
