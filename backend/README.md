@@ -13,7 +13,7 @@ Pre-requite dependency on your system: python3, ngrok, pip, homebrew <br>
 
 ## Get it running:
 1. Once you have your 'crudential.json' file and ngrok configured, make sure you are in the 'backend' directory. Then simply run 'source ./init.sh' and enter your password as prompted in your command line to get the local flask server running. The 'init.sh' file will also ensure you have all of the backend dependency listed below.
-2. After the flask server is running, use 'ngrok http 5002' to deploy your local server online.
+2. After the flask server is running, open another terminal and use 'ngrok http 5002' to deploy your local server online.
 
 Dependency: flask, flask-ngrok, psycopg[binary]
 
