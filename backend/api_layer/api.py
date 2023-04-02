@@ -3,21 +3,23 @@ import os
 import psycopg
 from psycopg.errors import ProgrammingError
 from flask import Flask, request, json
+from flask_ngrok import run_with_ngrok
 import json
 import atexit    # Gracefully exit and cleanup after normal termination
 
 # Need to import database_layer's service.py
 import importlib.util
 import sys
-spec = importlib.util.spec_from_file_location("service", "../database_layer/service.py")
+spec = importlib.util.spec_from_file_location("service", "database_layer/service.py")
 DBService = importlib.util.module_from_spec(spec)
 sys.modules["service"] = DBService
 spec.loader.exec_module(DBService)
 
 app = Flask(__name__)
+# run_with_ngrok(app)     # flask_ngrok will not work until they allow using different port than 5000
 
 # get crudential
-credential_file = open("../crudential.json")
+credential_file = open("crudential.json")
 credential_data = json.load(credential_file)
 
 # connect to cockroachDB
@@ -50,3 +52,8 @@ def insert_user():
     print(id)
 
     return {"id" : id}
+
+
+if __name__ == '__main__':
+    # app.run(debug=True)
+    app.run(port=5002)

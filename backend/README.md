@@ -2,10 +2,21 @@
 
 This directory contains backend server code for MovieDate application.
 
-Be sure you have a 'crudential.json' file from Ruihang so you can run this backend server code.
+## Prerequite:
 
-If you have your 'crudential.json' file, simply run 'source ./init.sh' in your command line to get this server running. The 'init.sh' file will also ensure you have all of the backend dependency listed below.
+Before you can get this backend server code running, you must request a 'crudential.json' file from Ruihang to access the database in the cloud.
 
-Dependency: python3, flask, psycopg[binary]
+You must also have your ngrok account and configured it to your system. Read more [here](https://ngrok.com/).
 
-# Database connection
+Pre-requite dependency on your system: python3, ngrok, pip, homebrew <br>
+* Note: After ngrok's installation, your ngrok's token must also be added to your system.
+
+## Get it running:
+1. Once you have your 'crudential.json' file and ngrok configured, make sure you are in the 'backend' directory. Then simply run 'source ./init.sh' and enter your password as prompted in your command line to get the local flask server running. The 'init.sh' file will also ensure you have all of the backend dependency listed below.
+2. After the flask server is running, use 'ngrok http 5002' to deploy your local server online.
+
+Dependency: flask, flask-ngrok, psycopg[binary]
+
+# Backend Architecture
+
+![](https://i.imgur.com/prZvAuV.png)
