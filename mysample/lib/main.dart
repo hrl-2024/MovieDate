@@ -65,7 +65,7 @@ class _MovieHomePage extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-    textController = TextEditingController(text: '');
+    textController = TextEditingController();
   }
 
   @override
@@ -73,24 +73,6 @@ class _MovieHomePage extends State<HomePage> {
     textController.dispose();
     super.dispose();
   }
-
-  // @override
-  // Widget build(BuildContext context) {
-  //   return CupertinoPageScaffold(
-  //     navigationBar: const CupertinoNavigationBar(
-  //       middle: Image(image: AssetImage('assets/MovieDate_logo.png'), width: 200),
-  //     ),
-  //     child: Center(
-  //       child: Padding(
-  //         padding: const EdgeInsets.all(16.0),
-  //         child: CupertinoSearchTextField(
-  //           controller: textController,
-  //           placeholder: 'Search',
-  //         ),
-  //       ),
-  //     ),
-  //   );
-  // }
 
   @override
   Widget build(BuildContext context) {  
@@ -122,7 +104,47 @@ class _MovieHomePage extends State<HomePage> {
                       borderRadius: BorderRadius.circular(12),
                     ),
                   ),
-                )
+                ),
+
+                const SizedBox(height: 60),
+
+                Row(children: const [
+                  SizedBox(width: 10,),
+                  Text("Trendy Movies")]
+                ),
+
+                const SizedBox(height: 10),
+
+                Container(
+                  margin: const EdgeInsets.symmetric(vertical: 20.0),
+                  height: 200.0,
+                  child: ListView(
+                    // This next line does the trick.
+                    scrollDirection: Axis.horizontal,
+                    children: [
+                      Container(
+                        width: 160.0,
+                        color: Colors.red,
+                      ),
+                      Container(
+                        width: 160.0,
+                        color: Colors.blue,
+                      ),
+                      Container(
+                        width: 160.0,
+                        color: Colors.green,
+                      ),
+                      Container(
+                        width: 160.0,
+                        color: Colors.yellow,
+                      ),
+                      Container(
+                        width: 160.0,
+                        color: Colors.orange,
+                      ),
+                    ],
+                  ),
+                ),
               ],
             );
           }
