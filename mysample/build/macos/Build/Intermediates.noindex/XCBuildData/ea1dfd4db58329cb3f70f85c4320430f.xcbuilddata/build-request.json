@@ -1,0 +1,63 @@
+{
+  "buildCommand" : {
+    "command" : "build",
+    "skipDependencies" : false,
+    "style" : "buildOnly"
+  },
+  "configuredTargets" : [
+    {
+      "guid" : "18c1723432283e0cc55f10a6dcfd9e02a26d6e580d3222b86d62fb80ec380c14"
+    }
+  ],
+  "containerPath" : "/Users/henryliu/Documents/Study/BU/BU Junior Spring/CS411/411-A5-1/mysample/macos/Runner.xcworkspace",
+  "continueBuildingAfterErrors" : false,
+  "enableIndexBuildArena" : false,
+  "hideShellScriptEnvironment" : false,
+  "parameters" : {
+    "action" : "build",
+    "activeArchitecture" : "arm64",
+    "activeRunDestination" : {
+      "disableOnlyActiveArch" : false,
+      "platform" : "macosx",
+      "sdk" : "macosx13.3",
+      "sdkVariant" : "macos",
+      "supportedArchitectures" : [
+        "arm64e",
+        "arm64",
+        "x86_64"
+      ],
+      "targetArchitecture" : "arm64"
+    },
+    "arenaInfo" : {
+      "buildIntermediatesPath" : "/Users/henryliu/Documents/Study/BU/BU Junior Spring/CS411/411-A5-1/mysample/build/macos/Build/Intermediates.noindex",
+      "buildProductsPath" : "/Users/henryliu/Documents/Study/BU/BU Junior Spring/CS411/411-A5-1/mysample/build/macos/Build/Products",
+      "derivedDataPath" : "/Users/henryliu/Documents/Study/BU/BU Junior Spring/CS411/411-A5-1/mysample/build/macos",
+      "indexDataStoreFolderPath" : "/Users/henryliu/Documents/Study/BU/BU Junior Spring/CS411/411-A5-1/mysample/build/macos/Index.noindex/DataStore",
+      "indexEnableDataStore" : true,
+      "indexPCHPath" : "/Users/henryliu/Documents/Study/BU/BU Junior Spring/CS411/411-A5-1/mysample/build/macos/Index.noindex/PrecompiledHeaders",
+      "pchPath" : "/Users/henryliu/Documents/Study/BU/BU Junior Spring/CS411/411-A5-1/mysample/build/macos/Build/Intermediates.noindex/PrecompiledHeaders"
+    },
+    "configurationName" : "Debug",
+    "overrides" : {
+      "commandLine" : {
+        "table" : {
+          "COMPILER_INDEX_STORE_ENABLE" : "NO",
+          "OBJROOT" : "/Users/henryliu/Documents/Study/BU/BU Junior Spring/CS411/411-A5-1/mysample/build/macos/Build/Intermediates.noindex",
+          "SYMROOT" : "/Users/henryliu/Documents/Study/BU/BU Junior Spring/CS411/411-A5-1/mysample/build/macos/Build/Products"
+        }
+      },
+      "synthesized" : {
+        "table" : {
+          "ACTION" : "build",
+          "ENABLE_PREVIEWS" : "NO"
+        }
+      }
+    }
+  },
+  "schemeCommand" : "launch",
+  "showNonLoggedProgress" : true,
+  "useDryRun" : false,
+  "useImplicitDependencies" : true,
+  "useLegacyBuildLocations" : false,
+  "useParallelTargets" : true
+}
