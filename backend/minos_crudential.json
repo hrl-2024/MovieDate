@@ -1,8 +1,0 @@
-{
-    "User": "minos",
-    "Password": "e8Lsv8KToytW6s50MQ_mww",
-
-    "Download_CA_Cert": "curl --create-dirs -o $HOME/.postgresql/root.crt 'https://cockroachlabs.cloud/clusters/f4ac91dd-843d-45dc-bcb8-47425d99e672/cert'",
-
-    "General_connection_string": "postgresql://minos:e8Lsv8KToytW6s50MQ_mww@moviedate-9299.7tt.cockroachlabs.cloud:26257/defaultdb?sslmode=verify-full"
-}
