@@ -1,8 +1,107 @@
+CREATE DATABASE IF NOT EXISTS MovieDate;
+USE MovieDate;
 DROP TABLE IF EXISTS Users;
+DROP TABLE IF EXISTS Watch_Party;
+DROP TABLE IF EXISTS ParticipatesIn;
+DROP TABLE IF EXISTS Post;
+DROP TABLE IF EXISTS PostBy;
+DROP TABLE IF EXISTS Comments;
+DROP TABLE IF EXISTS CommentsOn;
+DROP TABLE IF EXISTS CommentedBy;
+DROP TABLE IF EXISTS Likes;
 
 CREATE TABLE Users (
-	uid				    SERIAL PRIMARY KEY,
+	uid				INT AUTO_INCREMENT,
 	uname 				TEXT,
-	avatar				BLOB
+	avatar				longblob,
+	PRIMARY KEY  (uid)
 );
 
+CREATE TABLE FriendsWith(
+    uid1           INT NOT NULL,
+    uid2           INT NOT NULL,
+    PRIMARY KEY (uid1,uid2),
+    FOREIGN KEY (uid1) REFERENCES Users(uid)
+    FOREIGN KEY (uid2) REFERENCES Users(uid)
+);
+
+CREATE TABLE FavorMovies(
+    uid            INT NOT NULL,
+    movieID       INT NOT NULL,
+    PRIMARY KEY (uid,movieID),
+    FOREIGN KEY (uid) FOREIGN KEY Users(uid)
+);
+
+CREATE TABLE Watch_Party(
+	wid INT AUTO_INCREMENT,
+	ownerId INT NOT NULL,
+	movieId INT NOT NULL,
+    Dates DATETIME,
+    Platform VARCHAR(255),
+    CONSTRAINT Watch_Party_PK PRIMARY KEY (wid),
+    CONSTRAINT Watch_Party_FK_OwnerId FOREIGN KEY (Oid) REFERENCES Users(uid)
+);
+
+CREATE TABLE ParticipatesIn(
+	wid INT NOT NULL,
+	parId INT NOT NULL,
+    CONSTRAINT ParticipatesIn_PK PRIMARY KEY(wid,parId),
+    CONSTRAINT ParticipatesIn_ParticipateID FOREIGN KEY (parId) REFERENCES Users(uid)
+);
+
+CREATE TABLE Organizes(
+	wid INT NOT NULL,
+	ownerId INT NOT NULL,
+    CONSTRAINT Organizes_PK PRIMARY KEY(wid,ownerId),
+    CONSTRAINT Organizes_OwnerID FOREIGN KEY (ownerId) REFERENCES Users(uid)
+);
+
+CREATE TABLE Post (
+pid 				INT AUTO_INCREMENT,
+writer				INT,
+movie_id			INT,
+pdate				DATE,
+content 				VARCHAR(255),
+watch_party_id			INT,
+PRIMARY KEY (pid),
+FOREIGN KEY (watch_party_id) REFERENCES Watch_Party(wid) ON DELETE CASCADE
+);
+
+CREATE TABLE PostsBy(
+	pid INT NOT NULL UNIQUE,
+    uid INT NOT NULL,
+    CONSTRAINT PostsBy_PK PRIMARY KEY (pid,uid),
+    CONSTRAINT PostsBy_FK_pid FOREIGN KEY(pid) REFERENCES Post(pid),
+    CONSTRAINT PostsBy_FK_uid FOREIGN KEY(uid) REFERENCES Users(uid)
+);
+
+CREATE TABLE Comments(
+	cid INT AUTO_INCREMENT,
+    content LONGTEXT,
+    cdate DATETIME,
+    PRIMARY KEY (cid)
+);
+
+CREATE TABLE CommentsOn(
+	cid INT NOT NULL UNIQUE,
+    pid INT NOT NULL,
+    PRIMARY KEY (cid,pid),
+    CONSTRAINT CommentsOn_FK_cid FOREIGN KEY (cid) REFERENCES Comments(cid),
+    CONSTRAINT CommentsOn_FK_pid FOREIGN KEY (pid) REFERENCES Post(pid)
+);
+
+CREATE TABLE CommentedBy(
+	cid INT NOT NULL UNIQUE,
+    uid INT NOT NULL,
+    PRIMARY KEY (cid,uid),
+    CONSTRAINT CommentsBy_FK_cid FOREIGN KEY (cid) REFERENCES Comments(cid),
+    CONSTRAINT CommentsBy_FK_uid FOREIGN KEY (uid) REFERENCES Users(uid)
+);
+
+CREATE TABLE Likes(
+	pid INT NOT NULL,
+    uid INT NOT NULL,
+    PRIMARY KEY(pid,uid),
+    CONSTRAINT Likes_FK_uid FOREIGN KEY (uid) REFERENCES Users(uid),
+    CONSTRAINT Likes_FK_pid FOREIGN KEY (pid) REFERENCES Post(pid)
+);
