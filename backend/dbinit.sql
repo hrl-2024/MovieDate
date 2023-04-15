@@ -1,28 +1,31 @@
 CREATE DATABASE IF NOT EXISTS MovieDate;
 USE MovieDate;
-DROP TABLE IF EXISTS Users;
-DROP TABLE IF EXISTS Watch_Party;
-DROP TABLE IF EXISTS ParticipatesIn;
-DROP TABLE IF EXISTS Post;
-DROP TABLE IF EXISTS PostBy;
-DROP TABLE IF EXISTS Comments;
 DROP TABLE IF EXISTS CommentsOn;
 DROP TABLE IF EXISTS CommentedBy;
+DROP TABLE IF EXISTS Comments;
 DROP TABLE IF EXISTS Likes;
+DROP TABLE IF EXISTS PostsBy;
+DROP TABLE IF EXISTS Post;
+DROP TABLE IF EXISTS Organizes;
+DROP TABLE IF EXISTS ParticipatesIn;
+DROP TABLE IF EXISTS WatchParty;
+DROP TABLE IF EXISTS FavorMovies;
+DROP TABLE IF EXISTS FriendsWith;
+DROP TABLE IF EXISTS Users;
 
 CREATE TABLE Users (
-	uid				INT AUTO_INCREMENT,
+	uid				SERIAL PRIMARY KEY,
 	uname 				TEXT,
-	avatar				longblob,
-	PRIMARY KEY  (uid)
+	avatar				blob
 );
 
 CREATE TABLE FriendsWith(
     uid1           INT NOT NULL,
     uid2           INT NOT NULL,
     PRIMARY KEY (uid1,uid2),
-    FOREIGN KEY (uid1) REFERENCES Users(uid)
-    FOREIGN KEY (uid2) REFERENCES Users(uid)
+    FOREIGN KEY (uid1) REFERENCES Users(uid),
+    FOREIGN KEY (uid2) REFERENCES Users(uid),
+    CHECK (uid1 < uid2)
 );
 
 CREATE TABLE FavorMovies(
@@ -32,13 +35,12 @@ CREATE TABLE FavorMovies(
     FOREIGN KEY (uid) REFERENCES Users(uid)
 );
 
-CREATE TABLE Watch_Party(
-	wid INT AUTO_INCREMENT,
+CREATE TABLE WatchParty(
+	wid SERIAL PRIMARY KEY,
 	ownerId INT NOT NULL,
 	movieId INT NOT NULL,
-    Dates DATETIME,
+    Dates DATE,
     Platform VARCHAR(255),
-    CONSTRAINT Watch_Party_PK PRIMARY KEY (wid),
     CONSTRAINT Watch_Party_FK_OwnerId FOREIGN KEY (ownerId) REFERENCES Users(uid)
 );
 
@@ -50,22 +52,21 @@ CREATE TABLE ParticipatesIn(
 );
 
 CREATE TABLE Organizes(
-	wid INT NOT NULL,
+	wid INT UNIQUE NOT NULL ,
 	ownerId INT NOT NULL,
     CONSTRAINT Organizes_PK PRIMARY KEY(wid,ownerId),
     CONSTRAINT Organizes_OwnerID FOREIGN KEY (ownerId) REFERENCES Users(uid)
 );
 
 CREATE TABLE Post (
-pid 				INT AUTO_INCREMENT,
+pid 				SERIAL PRIMARY KEY,
 writer				INT,
 movie_id			INT,
 pdate				DATE,
 content 				VARCHAR(255),
-watch_party_id			INT,
-PRIMARY KEY (pid),
-FOREIGN KEY (writer) REFERENCES Users(uid)
-FOREIGN KEY (watch_party_id) REFERENCES Watch_Party(wid) ON DELETE CASCADE
+wid		INT,
+FOREIGN KEY (writer) REFERENCES Users(uid),
+FOREIGN KEY (wid) REFERENCES WatchParty(wid) ON DELETE CASCADE
 );
 
 CREATE TABLE PostsBy(
@@ -77,10 +78,10 @@ CREATE TABLE PostsBy(
 );
 
 CREATE TABLE Comments(
-	cid INT AUTO_INCREMENT,
-    content LONGTEXT,
-    cdate DATETIME,
-    PRIMARY KEY (cid)
+	cid SERIAL PRIMARY KEY,
+    content TEXT NOT NULL,
+    uid INT,
+    cdate DATE
 );
 
 CREATE TABLE CommentsOn(
@@ -91,14 +92,6 @@ CREATE TABLE CommentsOn(
     CONSTRAINT CommentsOn_FK_pid FOREIGN KEY (pid) REFERENCES Post(pid)
 );
 
-CREATE TABLE CommentedBy(
-	cid INT NOT NULL UNIQUE,
-    uid INT NOT NULL,
-    PRIMARY KEY (cid,uid),
-    CONSTRAINT CommentsBy_FK_cid FOREIGN KEY (cid) REFERENCES Comments(cid),
-    CONSTRAINT CommentsBy_FK_uid FOREIGN KEY (uid) REFERENCES Users(uid)
-);
-
 CREATE TABLE Likes(
 	pid INT NOT NULL,
     uid INT NOT NULL,
@@ -107,15 +100,6 @@ CREATE TABLE Likes(
     CONSTRAINT Likes_FK_pid FOREIGN KEY (pid) REFERENCES Post(pid)
 );
 
---Untested Sample Queries
+--Init 2 users
 INSERT INTO Users (uname, avatar) VALUES ('John Doe', NULL);
 INSERT INTO Users (uname, avatar) VALUES ('Jona Doe', NULL);
-INSERT INTO FavorMovies (uid, movieID) VALUES (1, 12345);
-INSERT INTO Watch_Party (ownerId, movieId, Dates, Platform) VALUES (1, 12345, '2023-05-01 19:00:00', 'Netflix');
-INSERT INTO ParticipatesIn (wid, parId) VALUES (1, 2);
-
-INSERT INTO Comments (content, cdate) VALUES ('This movie is great!', '2023-05-01 19:30:00');
-INSERT INTO PostsBy (pid, uid) VALUES (1, 3);
-INSERT INTO CommentsOn (cid, pid) VALUES (1, 1);
-INSERT INTO CommentedBy (cid, uid) VALUES (1, 3);
-INSERT INTO Post (writer, movie_id, pdate, content, watch_party_id) VALUES (1, 12345, NOW(), 'This is my new post!', 1);
