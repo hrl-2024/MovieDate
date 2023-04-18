@@ -1,6 +1,6 @@
 # To run this, use 'source ./init.sh' command
 
-install all dependencies:
+# install all dependencies:
 pip3 install "psycopg[binary]"
 python3 -m pip install flask
 brew install ngrok/ngrok/ngrok
