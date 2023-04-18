@@ -26,9 +26,10 @@ if __name__ == "__main__":
             print("Users",row)
             u.append(row[0])
         u.sort()
-        #Favor Movie Test
-        cur.execute("INSERT INTO FavorMovies (uid, movieID) VALUES (%s, 12345)",(u[0],))
-        cur.execute("SELECT * FROM FavorMovies")
+        # #Favor Movie Test
+        cur.execute("UPDATE Users SET favorMovies = array_append(favorMovies, 12345) WHERE uid = %s",(u[0],))
+        cur.execute("UPDATE Users SET favorMovies = array_append(favorMovies, 23456) WHERE uid = %s",(u[0],))
+        cur.execute("SELECT * FROM Users")
         rows = cur.fetchall()
         print("FavorMovies",rows)
 
@@ -78,7 +79,7 @@ if __name__ == "__main__":
         rows= cur.fetchall()
         c=rows[0]
         print("Comments",rows)
-        cur.execute("INSERT INTO CommentsOn(cid,pid) VALUES (%s,%s)",(c[0],p[0]))
+        cur.execute("INSERT INTO CommentsOn(cid,pid,uid) VALUES (%s,%s,%s)",(c[0],p[0],u[0]))
         cur.execute("SELECT * FROM CommentsOn")
         rows= cur.fetchall()
         print("CommentsOn",rows)

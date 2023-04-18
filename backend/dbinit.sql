@@ -15,8 +15,9 @@ DROP TABLE IF EXISTS Users;
 
 CREATE TABLE Users (
 	uid				SERIAL PRIMARY KEY,
-	uname 				TEXT,
-	avatar				blob
+	uname 			TEXT,
+	avatar			blob,
+    favorMovies     INT ARRAY
 );
 
 CREATE TABLE FriendsWith(
@@ -24,15 +25,7 @@ CREATE TABLE FriendsWith(
     uid2           INT NOT NULL,
     PRIMARY KEY (uid1,uid2),
     FOREIGN KEY (uid1) REFERENCES Users(uid),
-    FOREIGN KEY (uid2) REFERENCES Users(uid),
-    CHECK (uid1 < uid2)
-);
-
-CREATE TABLE FavorMovies(
-    uid            INT NOT NULL,
-    movieID       INT NOT NULL,
-    PRIMARY KEY (uid,movieID),
-    FOREIGN KEY (uid) REFERENCES Users(uid)
+    FOREIGN KEY (uid2) REFERENCES Users(uid)
 );
 
 CREATE TABLE WatchParty(
@@ -48,25 +41,27 @@ CREATE TABLE ParticipatesIn(
 	wid INT NOT NULL,
 	parId INT NOT NULL,
     CONSTRAINT ParticipatesIn_PK PRIMARY KEY(wid,parId),
-    CONSTRAINT ParticipatesIn_ParticipateID FOREIGN KEY (parId) REFERENCES Users(uid)
+    CONSTRAINT ParticipatesIn_ParticipateID FOREIGN KEY (parId) REFERENCES Users(uid),
+    FOREIGN KEY (wid) REFERENCES WatchParty(wid)
 );
 
 CREATE TABLE Organizes(
 	wid INT UNIQUE NOT NULL ,
 	ownerId INT NOT NULL,
     CONSTRAINT Organizes_PK PRIMARY KEY(wid,ownerId),
-    CONSTRAINT Organizes_OwnerID FOREIGN KEY (ownerId) REFERENCES Users(uid)
+    CONSTRAINT Organizes_OwnerID FOREIGN KEY (ownerId) REFERENCES Users(uid),
+    FOREIGN KEY (wid) REFERENCES WatchParty(wid)
 );
 
 CREATE TABLE Post (
-pid 				SERIAL PRIMARY KEY,
-writer				INT,
-movie_id			INT,
-pdate				DATE,
-content 				VARCHAR(255),
-wid		INT,
-FOREIGN KEY (writer) REFERENCES Users(uid),
-FOREIGN KEY (wid) REFERENCES WatchParty(wid) ON DELETE CASCADE
+    pid 				SERIAL PRIMARY KEY,
+    writer				INT,
+    movie_id			INT,
+    pdate				DATE,
+    content 			VARCHAR(255),
+    wid		            INT,
+    FOREIGN KEY (writer) REFERENCES Users(uid),
+    FOREIGN KEY (wid) REFERENCES WatchParty(wid) ON DELETE CASCADE
 );
 
 CREATE TABLE PostsBy(
@@ -80,16 +75,21 @@ CREATE TABLE PostsBy(
 CREATE TABLE Comments(
 	cid SERIAL PRIMARY KEY,
     content TEXT NOT NULL,
+    cdate DATE,
     uid INT,
-    cdate DATE
+    pid INT,
+    FOREIGN KEY(uid) REFERENCES Users,
+    FOREIGN KEY(pid) REFERENCES Post
 );
 
 CREATE TABLE CommentsOn(
 	cid INT NOT NULL UNIQUE,
     pid INT NOT NULL,
+    uid INT NOT NULL,
     PRIMARY KEY (cid,pid),
     CONSTRAINT CommentsOn_FK_cid FOREIGN KEY (cid) REFERENCES Comments(cid),
-    CONSTRAINT CommentsOn_FK_pid FOREIGN KEY (pid) REFERENCES Post(pid)
+    CONSTRAINT CommentsOn_FK_pid FOREIGN KEY (pid) REFERENCES Post(pid),
+    FOREIGN KEY (uid) REFERENCES Users
 );
 
 CREATE TABLE Likes(
