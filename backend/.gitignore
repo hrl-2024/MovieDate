@@ -1,3 +1,5 @@
 # Database connection credential information #
 *crudential.json
 *CACert.sh
+__pycache__/
+database_layer/__pycache__/
