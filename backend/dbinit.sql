@@ -1,5 +1,5 @@
-CREATE DATABASE IF NOT EXISTS MovieDate;
-USE MovieDate;
+-- CREATE DATABASE IF NOT EXISTS MovieDate;
+-- USE MovieDate;
 DROP TABLE IF EXISTS CommentsOn;
 DROP TABLE IF EXISTS CommentedBy;
 DROP TABLE IF EXISTS Comments;
@@ -29,11 +29,12 @@ CREATE TABLE FriendsWith(
 );
 
 CREATE TABLE WatchParty(
-	wid SERIAL PRIMARY KEY,
+	wid SERIAL UNIQUE,
 	ownerId INT NOT NULL,
 	movieId INT NOT NULL,
     Dates DATE,
     Platform VARCHAR(255),
+    PRIMARY KEY (wid, movieId),
     CONSTRAINT Watch_Party_FK_OwnerId FOREIGN KEY (ownerId) REFERENCES Users(uid)
 );
 
@@ -76,8 +77,8 @@ CREATE TABLE Comments(
 	cid SERIAL PRIMARY KEY,
     content TEXT NOT NULL,
     cdate DATE,
-    uid INT,
-    pid INT,
+    uid INT NOT NULL,
+    pid INT NOT NULL,
     FOREIGN KEY(uid) REFERENCES Users,
     FOREIGN KEY(pid) REFERENCES Post
 );
