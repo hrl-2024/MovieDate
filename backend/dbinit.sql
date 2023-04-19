@@ -46,14 +46,6 @@ CREATE TABLE ParticipatesIn(
     FOREIGN KEY (wid) REFERENCES WatchParty(wid)
 );
 
-CREATE TABLE Organizes(
-	wid INT UNIQUE NOT NULL ,
-	ownerId INT NOT NULL,
-    CONSTRAINT Organizes_PK PRIMARY KEY(wid,ownerId),
-    CONSTRAINT Organizes_OwnerID FOREIGN KEY (ownerId) REFERENCES Users(uid),
-    FOREIGN KEY (wid) REFERENCES WatchParty(wid)
-);
-
 CREATE TABLE Post (
     pid 				SERIAL PRIMARY KEY,
     writer				INT,
@@ -65,14 +57,6 @@ CREATE TABLE Post (
     FOREIGN KEY (wid) REFERENCES WatchParty(wid) ON DELETE CASCADE
 );
 
-CREATE TABLE PostsBy(
-	pid INT NOT NULL UNIQUE,
-    uid INT NOT NULL,
-    CONSTRAINT PostsBy_PK PRIMARY KEY (pid,uid),
-    CONSTRAINT PostsBy_FK_pid FOREIGN KEY(pid) REFERENCES Post(pid),
-    CONSTRAINT PostsBy_FK_uid FOREIGN KEY(uid) REFERENCES Users(uid)
-);
-
 CREATE TABLE Comments(
 	cid SERIAL PRIMARY KEY,
     content TEXT NOT NULL,
@@ -81,16 +65,6 @@ CREATE TABLE Comments(
     pid INT NOT NULL,
     FOREIGN KEY(uid) REFERENCES Users,
     FOREIGN KEY(pid) REFERENCES Post
-);
-
-CREATE TABLE CommentsOn(
-	cid INT NOT NULL UNIQUE,
-    pid INT NOT NULL,
-    uid INT NOT NULL,
-    PRIMARY KEY (cid,pid),
-    CONSTRAINT CommentsOn_FK_cid FOREIGN KEY (cid) REFERENCES Comments(cid),
-    CONSTRAINT CommentsOn_FK_pid FOREIGN KEY (pid) REFERENCES Post(pid),
-    FOREIGN KEY (uid) REFERENCES Users
 );
 
 CREATE TABLE Likes(
