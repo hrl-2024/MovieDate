@@ -123,11 +123,15 @@ def createWatchParty(connection, uid, mid, date, atTime, platform):
     wid = None
 
     with connection.cursor() as cur:
-        cur.execute(query)
-        wid = cur.fetchone()[0]
-        connection.commit()
+        try:
+            cur.execute(query)
+            wid = cur.fetchone()[0]
+            connection.commit()
+        except psycopg.errors.InvalidDatetimeFormat:
+            connection.rollback()
+            return False, "Invalid time format", None
 
-    return wid
+    return True, "created", wid
 
 def deleteWatchParty(connection, wid):
     query = "DELETE FROM WatchParty WHERE wid = {0}".format(wid)

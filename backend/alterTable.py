@@ -16,6 +16,8 @@ if __name__ == "__main__":
 
     # query = """SELECT * FROM Users WHERE uid = 858938797350584321 AND 1234 = ANY(favorMovies)"""
 
+    query = "DELETE FROM WatchParty WHERE wid = 858961754158071809"
+
     with connection.cursor() as cur:
         cur.execute(query)
         # res = cur.fetchall()

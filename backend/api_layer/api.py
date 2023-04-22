@@ -7,6 +7,8 @@ from flask_ngrok import run_with_ngrok
 import json
 import atexit    # Gracefully exit and cleanup after normal termination
 
+from datetime import datetime
+
 # Need to import database_layer's service.py
 import importlib.util
 import sys
@@ -34,6 +36,40 @@ def exit_handler():
 
 # install the handler
 atexit.register(exit_handler)
+
+# To check if the date is in valid format
+def is_valid_date(date_string):
+    try:
+        datetime.strptime(date_string, '%Y-%m-%d')
+        return True
+    except ValueError:
+        pass
+
+    try:
+        datetime.strptime(date_string, '%m-%d-%Y')
+        return True
+    except ValueError:
+        pass
+
+    try:
+        datetime.strptime(date_string, '%m-%d-%y')
+        return True
+    except ValueError:
+        pass
+
+    try:
+        datetime.strptime(date_string, '%y-%m-%d')
+        return True
+    except ValueError:
+        pass
+
+    try:
+        datetime.strptime(date_string, '%d-%m-%y')
+        return True
+    except ValueError:
+        pass
+
+    return False
 
 @app.route('/user', methods=['POST'])
 def insert_user():
@@ -204,17 +240,16 @@ def createWatchParty():
     platform = data.get("platform")
 
     if mid == None:
-        return {"created:": False, "message:": "Creating a new WatchParty with no movie is not allowed."}
+        return {"created:": False, "message": "Creating a new WatchParty with no movie is not allowed."}
     if date == None or time == None:
-        return {"created:": False, "message:": "Creating a new WatchParty with insufficient time information is not allowed."}
+        return {"created:": False, "message": "Creating a new WatchParty with insufficient time information is not allowed."}
+    
+    if not is_valid_date(date):
+        return {"created:": False, "message": "Invalid date format"}
 
-    # TODO: check valid date string type (refer to CockroachDB). Return false if invalid
+    result, msg, wid = DBService.createWatchParty(connection, uid, mid, date, time, platform)
 
-    result = DBService.createWatchParty(connection, uid, mid, date, time, platform)
-
-    print(result)
-
-    return {"created:": True, "wid": result}
+    return {"created:": result, "message" : msg, "wid": wid}
 
 @app.route('/user/WatchParty', methods=['GET'])
 def getWatchParty():
