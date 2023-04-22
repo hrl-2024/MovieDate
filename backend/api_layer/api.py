@@ -119,7 +119,7 @@ def update_name():
 
     return {"updated": result} 
 
-@app.route('/user/addFavoriteMovie', methods=['POST'])
+@app.route('/user/FavoriteMovie', methods=['POST'])
 def addToFavorite():
     data = {}
 
@@ -132,11 +132,11 @@ def addToFavorite():
     uid = data.get("id")
     mid = data.get("movie_id")
 
-    result = DBService.addToFavoriteMovie(connection, uid, mid)
+    result, msg = DBService.addToFavoriteMovie(connection, uid, mid)
 
-    return {"added:": result}
+    return {"added": result, "Message": msg}
 
-@app.route('/user/removeFavoriteMovie', methods=['PATCH'])
+@app.route('/user/FavoriteMovie', methods=['DELETE'])
 def removeFromFavorite():
     data = {}
 

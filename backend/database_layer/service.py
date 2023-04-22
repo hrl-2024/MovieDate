@@ -58,13 +58,25 @@ def updateName(connection, uid, name):
     
 def addToFavoriteMovie(connection, uid, mid):
 
+    checkIfAlready = """SELECT uname FROM Users WHERE uid = {0} AND {1} = ANY(favorMovies)""".format(uid, mid)
+
+    with connection.cursor() as cur:
+        cur.execute(checkIfAlready)
+        res = cur.fetchall()
+        connection.commit()
+
+    print("res:", res)
+
+    if len(res) != 0:
+        return False, "already in user's favorite"
+
     query = "UPDATE Users SET favorMovies = array_append(favorMovies, {0}) WHERE uid = {1}".format(mid, uid)
 
     with connection.cursor() as cur:
         cur.execute(query)
         connection.commit()
 
-    return True
+    return True, "added"
 
 def removeFromFavoriteMovie(connection, uid, mid):
     query = "UPDATE Users SET favorMovies = array_remove(favorMovies, {0}) WHERE uid = {1}".format(mid, uid)
