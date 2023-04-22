@@ -153,7 +153,7 @@ def removeFromFavorite():
 
     return {"removed:": result}
 
-@app.route('/user/addFriend', methods=['POST'])
+@app.route('/user/Friend', methods=['POST'])
 def addFriend():
     data = {}
 
@@ -166,11 +166,11 @@ def addFriend():
     uid1 = data.get("uid1")
     uid2 = data.get("uid2")
 
-    result = DBService.addFriend(connection, uid1, uid2)
+    result, msg = DBService.addFriend(connection, uid1, uid2)
 
-    return {"added:": result}
+    return {"added:": result, "message": msg}
 
-@app.route('/user/removeFriend', methods=['DELETE'])
+@app.route('/user/Friend', methods=['DELETE'])
 def removeFriend():
     data = {}
 

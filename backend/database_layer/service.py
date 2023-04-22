@@ -93,11 +93,14 @@ def addFriend(connection, uid1, uid2):
     query2 = "INSERT INTO FriendsWith (uid1,uid2) VALUES ({0},{1})".format(uid2,uid1)
 
     with connection.cursor() as cur:
-        cur.execute(query1)
-        cur.execute(query2)
-        connection.commit()
-
-    return True
+        try:
+            cur.execute(query1)
+            cur.execute(query2)
+            connection.commit()
+        except psycopg.errors.UniqueViolation:
+            return False, "already friend"
+    
+    return True, "Added"
 
 def removeFriend(connection, uid1, uid2):
     query1 = "DELETE FROM FriendsWith WHERE uid1 = {0} AND uid2 = {1}".format(uid1,uid2)
