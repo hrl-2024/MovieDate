@@ -158,3 +158,65 @@ def getUserParticipatedWatchParty(connection, participant):
         wid = cur.fetchall()
 
     return wid
+
+def createPost(connection, uid, movie_id : 0, content, wid : 0):
+    pid = None
+
+    parsed_content = content.replace("'", "''")
+    print("parsed_content:", parsed_content)
+
+    with connection.cursor() as cur:
+        query = """INSERT INTO Post (writer, movie_id, pdate, content)
+                VALUES({0}, {1}, CURRENT_TIMESTAMP, '{2}')
+                RETURNING pid """.format(
+                uid, movie_id, parsed_content
+                )
+        
+        if wid != 0:
+            query = """INSERT INTO Post (writer, movie_id, pdate, content, wid)
+                VALUES({0}, {1}, CURRENT_TIMESTAMP, '{2}', {3})
+                RETURNING pid """.format(
+                uid, movie_id, parsed_content, wid
+                )
+        
+        cur.execute(query)
+        connection.commit()
+
+        pid = cur.fetchone()[0]
+
+    return pid
+
+def getUserPost(connection, uid):
+    post = None
+
+    with connection.cursor() as cur:
+        query = """SELECT *
+            FROM Post
+            WHERE writer = {0}
+            ORDER BY pdate DESC""".format(uid)
+        
+        cur.execute(query)
+        post = cur.fetchall()
+        connection.commit()
+
+    return post
+
+def getAllPost(connection, uid):
+
+    post = None
+
+    with connection.cursor() as cur:
+        query = """SELECT *
+            FROM Post
+            WHERE writer in (
+                SELECT uid2
+                FROM FriendsWith
+                WHERE uid1 = {uid}            
+                ) OR writer = {uid}
+            ORDER BY pdate DESC""".format(uid=uid)
+        
+        cur.execute(query)
+        post = cur.fetchall()
+        connection.commit()
+
+    return post

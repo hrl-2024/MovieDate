@@ -181,6 +181,9 @@ def createWatchParty():
     date = data.get("date")
     platform = data.get("platform")
 
+    if mid == None:
+            return {"message:": "Creating a new WatchParty with no movie is not allowed."}
+
     # TODO: check valid date string type (refer to CockroachDB). Return false if invalid
 
     result = DBService.createWatchParty(connection, uid, mid, date, platform)
@@ -299,6 +302,99 @@ def getParticipatedWatchParty():
                 "Platform": watchParty[4]
                 })
     
+    return {"result": result}
+
+@app.route('/user/post', methods=['POST'])
+def createPost():
+    data = {}
+
+    if request.is_json:
+        data = request.json
+    else:
+        print("received non-json object, converting to json")
+        data = json.loads(request.data)
+
+    # Required Fields:
+    uid = data.get("uid")
+    movie_id = data.get("movie_id", 0)
+    content = data.get("content")
+
+    # Optional
+    newWatchParty = data.get("newWatchParty", False)   # optional. true -> create new watchparty
+    wid = 0
+
+    print("content:", content)
+
+    if (newWatchParty):
+        date = data.get("date")
+        platform = data.get("platform")
+
+        if movie_id == None:
+            return {"message:": "Creating a new WatchParty with no movie is not allowed."}
+
+        # TODO: check valid date string type (refer to CockroachDB). Return false if invalid
+
+        wid = DBService.createWatchParty(connection, uid, movie_id, date, platform)
+    
+    pid = DBService.createPost(connection, uid, movie_id, content, wid)
+
+    return {"created" : True, "pid" : pid}
+
+@app.route('/user/post', methods=['GET'])
+def getUserPost():
+    data = {}
+
+    if request.is_json:
+        data = request.json
+    else:
+        print("received non-json object, converting to json")
+        data = json.loads(request.data)
+
+    # Required Fields:
+    uid = data.get("uid")
+
+    posts = DBService.getUserPost(connection, uid)
+
+    result = []
+
+    for p in posts:
+        result.append({"pid": p[0],
+                       "writer": p[1],
+                       "movie_id": p[2],
+                       "pdate": p[3],
+                       "content": p[4],
+                       "wid": p[5]
+            })
+        
+    return {"result": result}
+
+@app.route('/post', methods=['GET'])
+def getAllPost():
+
+    data = {}
+
+    if request.is_json:
+        data = request.json
+    else:
+        print("received non-json object, converting to json")
+        data = json.loads(request.data)
+
+    # Required Fields:
+    uid = data.get("uid")
+
+    posts = DBService.getAllPost(connection, uid)
+
+    result = []
+
+    for p in posts:
+        result.append({"pid": p[0],
+                       "writer": p[1],
+                       "movie_id": p[2],
+                       "pdate": p[3],
+                       "content": p[4],
+                       "wid": p[5]
+            })
+        
     return {"result": result}
 
 
