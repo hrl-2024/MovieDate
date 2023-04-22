@@ -24,8 +24,8 @@ CREATE TABLE FriendsWith(
     uid1           INT NOT NULL,
     uid2           INT NOT NULL,
     PRIMARY KEY (uid1,uid2),
-    FOREIGN KEY (uid1) REFERENCES Users(uid),
-    FOREIGN KEY (uid2) REFERENCES Users(uid)
+    FOREIGN KEY (uid1) REFERENCES Users(uid) ON DELETE CASCADE,
+    FOREIGN KEY (uid2) REFERENCES Users(uid) ON DELETE CASCADE
 );
 
 CREATE TABLE WatchParty(
@@ -35,15 +35,15 @@ CREATE TABLE WatchParty(
     Dates DATE,
     Platform VARCHAR(255),
     PRIMARY KEY (wid, movieId),
-    CONSTRAINT Watch_Party_FK_OwnerId FOREIGN KEY (ownerId) REFERENCES Users(uid)
+    CONSTRAINT Watch_Party_FK_OwnerId FOREIGN KEY (ownerId) REFERENCES Users(uid) ON DELETE CASCADE
 );
 
 CREATE TABLE ParticipatesIn(
 	wid INT NOT NULL,
 	parId INT NOT NULL,
     CONSTRAINT ParticipatesIn_PK PRIMARY KEY(wid,parId),
-    CONSTRAINT ParticipatesIn_ParticipateID FOREIGN KEY (parId) REFERENCES Users(uid),
-    FOREIGN KEY (wid) REFERENCES WatchParty(wid)
+    CONSTRAINT ParticipatesIn_ParticipateID FOREIGN KEY (parId) REFERENCES Users(uid) ON DELETE CASCADE,
+    FOREIGN KEY (wid) REFERENCES WatchParty(wid) ON DELETE CASCADE
 );
 
 CREATE TABLE Post (
@@ -53,7 +53,7 @@ CREATE TABLE Post (
     pdate				DATE,
     content 			VARCHAR(255),
     wid		            INT,
-    FOREIGN KEY (writer) REFERENCES Users(uid),
+    FOREIGN KEY (writer) REFERENCES Users(uid) ON DELETE CASCADE,
     FOREIGN KEY (wid) REFERENCES WatchParty(wid) ON DELETE CASCADE
 );
 
@@ -63,16 +63,16 @@ CREATE TABLE Comments(
     cdate DATE,
     uid INT NOT NULL,
     pid INT NOT NULL,
-    FOREIGN KEY(uid) REFERENCES Users,
-    FOREIGN KEY(pid) REFERENCES Post
+    FOREIGN KEY(uid) REFERENCES Users ON DELETE CASCADE,
+    FOREIGN KEY(pid) REFERENCES Post ON DELETE CASCADE
 );
 
 CREATE TABLE Likes(
 	pid INT NOT NULL,
     uid INT NOT NULL,
     PRIMARY KEY(pid,uid),
-    CONSTRAINT Likes_FK_uid FOREIGN KEY (uid) REFERENCES Users(uid),
-    CONSTRAINT Likes_FK_pid FOREIGN KEY (pid) REFERENCES Post(pid)
+    CONSTRAINT Likes_FK_uid FOREIGN KEY (uid) REFERENCES Users(uid) ON DELETE CASCADE,
+    CONSTRAINT Likes_FK_pid FOREIGN KEY (pid) REFERENCES Post(pid) ON DELETE CASCADE
 );
 
 --Init 2 users

@@ -166,6 +166,142 @@ def removeFriend():
 
     return {"removed:": result}
 
+@app.route('/user/WatchParty', methods=['POST'])
+def createWatchParty():
+    data = {}
+
+    if request.is_json:
+        data = request.json
+    else:
+        print("received non-json object, converting to json")
+        data = json.loads(request.data)
+
+    uid = data.get("uid")
+    mid = data.get("mid")
+    date = data.get("date")
+    platform = data.get("platform")
+
+    # TODO: check valid date string type (refer to CockroachDB). Return false if invalid
+
+    result = DBService.createWatchParty(connection, uid, mid, date, platform)
+
+    print(result)
+
+    return {"created:": True, "wid": result}
+
+@app.route('/user/WatchParty', methods=['GET'])
+def getWatchParty():
+    data = {}
+
+    if request.is_json:
+        data = request.json
+    else:
+        print("received non-json object, converting to json")
+        data = json.loads(request.data)
+
+    organizer = data.get("uid")
+
+    queryresult = DBService.getUserWatchParty(connection, organizer)
+
+    if queryresult == None:
+        return {"message:": "No watch party is created by this user"}
+    
+    result = []
+
+    for watchParty in queryresult:
+        result.append({"wid": watchParty[0],
+                "ownerId": watchParty[1],
+                "movieId": watchParty[2],
+                "Date": watchParty[3],
+                "Platform": watchParty[4]
+                })
+    
+    return {"result": result}
+
+@app.route('/user/WatchParty', methods=['DELETE'])
+def deleteWatchParty():
+    data = {}
+
+    if request.is_json:
+        data = request.json
+    else:
+        print("received non-json object, converting to json")
+        data = json.loads(request.data)
+
+    wid = data.get("wid")
+
+    result = DBService.deleteWatchParty(connection, wid)
+
+    return {"removed": result}
+
+@app.route('/user/joinWatchParty', methods=['POST'])
+def participateWatchParty():
+    data = {}
+
+    if request.is_json:
+        data = request.json
+    else:
+        print("received non-json object, converting to json")
+        data = json.loads(request.data)
+
+    participant = data.get("participantID")
+    wid = data.get("wid")
+
+    result = DBService.addToWatchParty(connection, participant, wid)
+
+    return {"added:": result}
+
+@app.route('/user/joinWatchPartyWithNoID', methods=['POST'])
+def participateWatchPartyWithNoId():
+    data = {}
+
+    if request.is_json:
+        data = request.json
+    else:
+        print("received non-json object, converting to json")
+        data = json.loads(request.data)
+
+    participant = data.get("participantID")
+    organizer = data.get("organizerID")
+    movie = data.get("mid")
+    date = data.get("date")
+
+    result = DBService.addToWatchPartyWithNoId(connection, participant, organizer, movie, date)
+
+    # TODO: make (organizer, mid, date) unique in sql table: UNIQUE(col1, col2, col3)
+
+    return {"added:": result}
+
+@app.route('/user/getParticipatedWatchParty', methods=['GET'])
+def getParticipatedWatchParty():
+    data = {}
+
+    if request.is_json:
+        data = request.json
+    else:
+        print("received non-json object, converting to json")
+        data = json.loads(request.data)
+
+    participant = data.get("participantID")
+
+    queryresult = DBService.getUserParticipatedWatchParty(connection, participant)
+
+    if queryresult == None:
+        return {"message:": "No watch party is created by this user"}
+    
+    result = []
+
+    for watchParty in queryresult:
+        result.append({"wid": watchParty[0],
+                "ownerId": watchParty[1],
+                "movieId": watchParty[2],
+                "Date": watchParty[3],
+                "Platform": watchParty[4]
+                })
+    
+    return {"result": result}
+
+
 if __name__ == '__main__':
     # app.run(debug=True)
     app.run(port=5002)

@@ -1,5 +1,4 @@
-import logging
-import os
+import argparse
 import psycopg
 from psycopg.errors import ProgrammingError
 import json
@@ -12,25 +11,24 @@ if __name__ == "__main__":
 
     connection = psycopg.connect(credential_data['General_connection_string'], application_name="$moviedate")
 
-    create_query_file = open("dbinit.sql", "r")
+    parser = argparse.ArgumentParser(description = "MovieDate Show Table")
+    parser.add_argument("--table", type = str, help = "table name for showing")
 
-    create_query = create_query_file.read()
+    args = parser.parse_args()
+    table = args.table
+    query = "SELECT * FROM {0}".format(table)
 
     with connection.cursor() as cur:
-        cur.execute("SELECT * FROM Users")
-        rows = cur.fetchall()
-        u=[]
-        # User Table Test
-        for row in rows:
-            print("Users",row)
-            u.append(row[0])
-        u.sort()
+        cur.execute(query)
+        results = cur.fetchall()
+        for row in results:
+            print(row)
         # #Favor Movie Test
         # cur.execute("UPDATE Users SET favorMovies = array_append(favorMovies, 12345) WHERE uid = %s",(u[0],))
         # cur.execute("UPDATE Users SET favorMovies = array_append(favorMovies, 23456) WHERE uid = %s",(u[0],))
-        cur.execute("SELECT * FROM Users")
-        rows = cur.fetchall()
-        print("FavorMovies",rows)
+        # cur.execute("SELECT * FROM Users")
+        # rows = cur.fetchall()
+        # print("FavorMovies",rows)
 
         # #Friendswith Test
         # cur.execute("INSERT INTO FriendsWith (uid1,uid2) VALUES (%s,%s)",(u[0],u[1],))

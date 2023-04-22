@@ -79,3 +79,82 @@ def removeFriend(connection, uid1, uid2):
         connection.commit()
 
     return True
+
+def createWatchParty(connection, uid, mid, date, platform):
+
+    query1 = "INSERT INTO WatchParty(ownerId,movieId,Dates,Platform) VALUES ({0},{1},'{2}','{3}') RETURNING wid".format(uid, mid, date, platform)
+
+    wid = None
+
+    with connection.cursor() as cur:
+        cur.execute(query1)
+        wid = cur.fetchone()[0]
+        connection.commit()
+
+    return wid
+
+def deleteWatchParty(connection, wid):
+    query = "DELETE FROM WatchParty WHERE wid = {0}".format(wid)
+
+    with connection.cursor() as cur:
+        cur.execute(query)
+        connection.commit()
+    
+    return True
+
+def getUserWatchParty(connection, uid):
+    # find the wid first
+    query = "SELECT * FROM WatchParty WHERE ownerId = {0}".format(uid)
+
+    result = None
+
+    with connection.cursor() as cur:
+        cur.execute(query)
+        result = cur.fetchall()
+        connection.commit()
+
+    return result
+
+def addToWatchParty(connection, participant, wid):
+    with connection.cursor() as cur:
+        query = "INSERT INTO ParticipatesIn (wid, parId) VALUES ({0},{1})".format(wid, participant)
+        cur.execute(query)
+        connection.commit()
+
+    return True
+
+def addToWatchPartyWithNoId(connection, participant, organizer, movie, date):
+
+    # find the wid first
+    findWidQuery = "SELECT wid FROM WatchParty WHERE ownerId = {0} AND movieId = {1} AND Dates='{2}'".format(organizer, movie, date)
+
+    wid = None
+
+    with connection.cursor() as cur:
+        cur.execute(findWidQuery)
+        wid = cur.fetchone()[0]
+
+        print("found wid: ", wid)
+
+        # insert
+        query = "INSERT INTO ParticipatesIn (wid, parId) VALUES ({0},{1})".format(wid, participant)
+        cur.execute(query)
+        connection.commit()
+
+    return True
+
+def getUserParticipatedWatchParty(connection, participant):
+    wid = None
+
+    with connection.cursor() as cur:
+        query = """
+        SELECT *
+        FROM WatchParty
+        WHERE wid in 
+            (SELECT wid FROM ParticipatesIn WHERE parId = {0})""".format(participant)
+        cur.execute(query)
+        connection.commit()
+
+        wid = cur.fetchall()
+
+    return wid
