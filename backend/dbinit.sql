@@ -29,12 +29,13 @@ CREATE TABLE FriendsWith(
 );
 
 CREATE TABLE WatchParty(
-	wid SERIAL UNIQUE,
-	ownerId INT NOT NULL,
-	movieId INT NOT NULL,
-    Dates DATE,
-    Platform VARCHAR(255),
-    PRIMARY KEY (wid, movieId),
+	wid                 SERIAL UNIQUE,
+	ownerId             INT NOT NULL,
+	movieId             INT NOT NULL,
+    Dates               DATE,
+    atTime              TIME,
+    Platform            VARCHAR(255),
+    PRIMARY KEY wid,
     CONSTRAINT Watch_Party_FK_OwnerId FOREIGN KEY (ownerId) REFERENCES Users(uid) ON DELETE CASCADE
 );
 

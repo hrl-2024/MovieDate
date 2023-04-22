@@ -200,14 +200,17 @@ def createWatchParty():
     uid = data.get("uid")
     mid = data.get("mid")
     date = data.get("date")
+    time = data.get("time")
     platform = data.get("platform")
 
     if mid == None:
-            return {"message:": "Creating a new WatchParty with no movie is not allowed."}
+        return {"created:": False, "message:": "Creating a new WatchParty with no movie is not allowed."}
+    if date == None or time == None:
+        return {"created:": False, "message:": "Creating a new WatchParty with insufficient time information is not allowed."}
 
     # TODO: check valid date string type (refer to CockroachDB). Return false if invalid
 
-    result = DBService.createWatchParty(connection, uid, mid, date, platform)
+    result = DBService.createWatchParty(connection, uid, mid, date, time, platform)
 
     print(result)
 

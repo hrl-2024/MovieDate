@@ -11,18 +11,15 @@ if __name__ == "__main__":
 
     connection = psycopg.connect(credential_data['General_connection_string'], application_name="$moviedate")
 
-    # query = """ALTER TABLE ParticipatesIn
-    #             ADD CONSTRAINT ParticipatesIn_ParticipateID
-    #             FOREIGN KEY (parId) REFERENCES Users(uid) ON DELETE CASCADE"""
+    query = """ALTER TABLE WatchParty
+                ADD COLUMN atTime TIME"""
 
-    query = """SELECT * FROM Users WHERE uid = 858938797350584321 AND 1234 = ANY(favorMovies)"""
+    # query = """SELECT * FROM Users WHERE uid = 858938797350584321 AND 1234 = ANY(favorMovies)"""
 
     with connection.cursor() as cur:
         cur.execute(query)
-        res = cur.fetchall()
+        # res = cur.fetchall()
         connection.commit()
     
     # Close communication with the database
     connection.close()
-
-    print(res)

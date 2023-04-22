@@ -98,6 +98,7 @@ def addFriend(connection, uid1, uid2):
             cur.execute(query2)
             connection.commit()
         except psycopg.errors.UniqueViolation:
+            connection.rollback()
             return False, "already friend"
     
     return True, "Added"
@@ -113,14 +114,16 @@ def removeFriend(connection, uid1, uid2):
 
     return True
 
-def createWatchParty(connection, uid, mid, date, platform):
+def createWatchParty(connection, uid, mid, date, atTime, platform):
 
-    query1 = "INSERT INTO WatchParty(ownerId,movieId,Dates,Platform) VALUES ({0},{1},'{2}','{3}') RETURNING wid".format(uid, mid, date, platform)
+    query = """INSERT INTO WatchParty(ownerId,movieId,Dates,atTime,Platform)
+        VALUES ({0},{1},'{2}',TIME '{3}','{4}')
+        RETURNING wid""".format(uid, mid, date, atTime, platform)
 
     wid = None
 
     with connection.cursor() as cur:
-        cur.execute(query1)
+        cur.execute(query)
         wid = cur.fetchone()[0]
         connection.commit()
 
