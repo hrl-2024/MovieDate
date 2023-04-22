@@ -398,6 +398,54 @@ def getAllPost():
     return {"result": result}
 
 
+@app.route("/comment", methods=["POST"])
+def postComment():
+    data = {}
+
+    if request.is_json:
+        data = request.json
+    else:
+        print("received non-json object, converting to json")
+        data = json.loads(request.data)
+
+    # Required Fields:
+    uid = data.get("uid")
+    pid = data.get("pid")
+    content = data.get("content")
+
+    cid = DBService.postComment(connection, uid, pid, content)
+
+    return {"posted": True, "cid": cid}
+
+@app.route("/comment", methods=["GET"])
+def getComment():
+    data = {}
+
+    if request.is_json:
+        data = request.json
+    else:
+        print("received non-json object, converting to json")
+        data = json.loads(request.data)
+
+    # Required Fields:
+    pid = data.get("pid")
+
+    comments = DBService.getComment(connection, pid)
+
+    result = []
+
+    for c in comments:
+        result.append({
+            "cid": c[0],
+            "content": c[1],
+            "cdate": c[2],
+            "uid": c[3],
+            "pid": c[4]
+        })
+
+    return {"result":result}
+
+
 if __name__ == '__main__':
     # app.run(debug=True)
     app.run(port=5002)

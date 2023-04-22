@@ -220,3 +220,35 @@ def getAllPost(connection, uid):
         connection.commit()
 
     return post
+
+def postComment(connection, uid, pid, comment):
+
+    cid = None
+
+    parsedComment = comment.replace("'", "''")
+
+    with connection.cursor() as cur:
+        query = """ INSERT INTO Comments (pid, content, cdate, uid)
+                    VALUES({0}, '{1}', CURRENT_TIMESTAMP, {2})
+                    RETURNING cid""".format(pid, parsedComment, uid)
+        
+        cur.execute(query)
+        cid = cur.fetchone()[0]
+        connection.commit()
+
+    return cid
+
+def getComment(connection, pid):
+
+    comments = None
+
+    with connection.cursor() as cur:
+        query = """ SELECT *
+         FROM Comments
+         WHERE pid = {0} """.format(pid)
+        
+        cur.execute(query)
+        comments = cur.fetchall()
+        connection.commit()
+
+    return comments
