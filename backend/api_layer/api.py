@@ -47,8 +47,11 @@ def insert_user():
         data = json.loads(request.data)
     
     name = data.get('name')
+    avatar = data.get('avatar')
+
     print(name)
-    id = DBService.insert_user(connection, name)
+
+    id = DBService.insert_user(connection, name, avatar)
     print(id)
 
     return {"id" : id}

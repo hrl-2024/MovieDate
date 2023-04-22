@@ -2,9 +2,15 @@ import psycopg
 from psycopg.errors import ProgrammingError
 
 # Create the user and return the uid of the user
-def insert_user(connection, name : str):
+def insert_user(connection, name : str, avatar=None):
 
-    query = "INSERT INTO Users (uname) VALUES ('{uname}') RETURNING uid".format(uname = name)
+    parsedName = name.replace("'", "''")
+
+    query = """INSERT INTO Users (uname) VALUES ('{uname}') RETURNING uid""".format(uname = parsedName)
+
+    if avatar:
+        query = """INSERT INTO Users (uname, avatar) VALUES ('{0}', CAST('{1}' AS BLOB) )
+        RETURNING uid""".format(parsedName, avatar)
 
     id = None
 
