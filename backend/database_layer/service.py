@@ -43,6 +43,18 @@ def updateAvatar(connection, uid, avatar):
         connection.commit()
 
     return True
+
+def updateName(connection, uid, name):
+
+    parsedName = name.replace("'", "''")
+
+    query = "UPDATE Users SET uname = '{0}' WHERE uid = {1}".format(parsedName, uid)
+
+    with connection.cursor() as cur:
+        cur.execute(query)
+        connection.commit()
+
+    return True
     
 def addToFavoriteMovie(connection, uid, mid):
 

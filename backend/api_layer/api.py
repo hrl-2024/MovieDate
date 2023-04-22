@@ -83,7 +83,7 @@ def get_user():
             "avatar": user[2],
             "favorite_movie": favorite_movie}
 
-@app.route("/user/updateAvatar", methods=['POST'])
+@app.route("/user/avatar", methods=['PUT'])
 def update_avatar():
 
     data = {}
@@ -99,7 +99,25 @@ def update_avatar():
 
     result = DBService.updateAvatar(connection, id, avatar)
 
-    return {"added:": result} 
+    return {"updated": result} 
+
+@app.route("/user/name", methods=['PUT'])
+def update_name():
+
+    data = {}
+
+    if request.is_json:
+        data = request.json
+    else:
+        print("received non-json object, converting to json")
+        data = json.loads(request.data)
+    
+    id = data.get('id')
+    name = data.get('name')
+
+    result = DBService.updateName(connection, id, name)
+
+    return {"updated": result} 
 
 @app.route('/user/addFavoriteMovie', methods=['POST'])
 def addToFavorite():
