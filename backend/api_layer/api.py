@@ -287,7 +287,7 @@ def getParticipatedWatchParty():
     queryresult = DBService.getUserParticipatedWatchParty(connection, participant)
 
     if queryresult == None:
-        return {"message:": "No watch party is created by this user"}
+        return {"message:": "This user have no participated Watch Party"}
     
     result = []
 
