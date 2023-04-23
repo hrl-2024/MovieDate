@@ -157,11 +157,15 @@ def getUserWatchParty(connection, uid):
 
 def addToWatchParty(connection, participant, wid):
     with connection.cursor() as cur:
-        query = "INSERT INTO ParticipatesIn (wid, parId) VALUES ({0},{1})".format(wid, participant)
-        cur.execute(query)
-        connection.commit()
+        try:
+            query = "INSERT INTO ParticipatesIn (wid, parId) VALUES ({0},{1})".format(wid, participant)
+            cur.execute(query)
+            connection.commit()
+        except psycopg.errors.UniqueViolation:
+            connection.rollback()
+            return False, "already participated"
 
-    return True
+    return True, "added"
 
 def addToWatchPartyWithNoId(connection, participant, organizer, movie, date):
 
@@ -188,8 +192,9 @@ def getUserParticipatedWatchParty(connection, participant):
 
     with connection.cursor() as cur:
         query = """
-        SELECT *
+        SELECT wid, ownerId, movieId, Dates, atTime, Platform, uname, avatar
         FROM WatchParty
+        INNER JOIN Users ON Users.uid = WatchParty.ownerId
         WHERE wid in 
             (SELECT wid FROM ParticipatesIn WHERE parId = {0})""".format(participant)
         cur.execute(query)
@@ -206,15 +211,15 @@ def createPost(connection, uid, movie_id : 0, content, wid : 0):
     print("parsed_content:", parsed_content)
 
     with connection.cursor() as cur:
-        query = """INSERT INTO Post (writer, movie_id, pdate, content)
-                VALUES({0}, {1}, CURRENT_TIMESTAMP, '{2}')
+        query = """INSERT INTO Post (writer, movie_id, pdate, ptime, content)
+                VALUES({0}, {1}, CURRENT_TIMESTAMP, CURRENT_TIME, '{2}')
                 RETURNING pid """.format(
                 uid, movie_id, parsed_content
                 )
         
         if wid != 0:
-            query = """INSERT INTO Post (writer, movie_id, pdate, content, wid)
-                VALUES({0}, {1}, CURRENT_TIMESTAMP, '{2}', {3})
+            query = """INSERT INTO Post (writer, movie_id, pdate, ptime, content, wid)
+                VALUES({0}, {1}, CURRENT_TIMESTAMP, CURRENT_TIME, '{2}', {3})
                 RETURNING pid """.format(
                 uid, movie_id, parsed_content, wid
                 )
@@ -230,10 +235,10 @@ def getUserPost(connection, uid):
     post = None
 
     with connection.cursor() as cur:
-        query = """SELECT *
-            FROM Post
-            WHERE writer = {0}
-            ORDER BY pdate DESC""".format(uid)
+        query = """SELECT pid, writer, movie_id, pdate, ptime, content, wid, uname, avatar
+            FROM Post, Users
+            WHERE Post.writer = {0} AND Post.writer = Users.uid
+            ORDER BY pdate DESC, ptime DESC""".format(uid)
         
         cur.execute(query)
         post = cur.fetchall()
@@ -246,13 +251,13 @@ def getAllPost(connection, uid):
     post = None
 
     with connection.cursor() as cur:
-        query = """SELECT *
-            FROM Post
+        query = """SELECT pid, writer, movie_id, pdate, ptime, content, wid, uname, avatar
+            FROM Post, Users
             WHERE writer in (
                 SELECT uid2
                 FROM FriendsWith
                 WHERE uid1 = {uid}            
-                ) OR writer = {uid}
+                ) OR writer = {uid} AND Post.writer = Users.uid
             ORDER BY pdate DESC""".format(uid=uid)
         
         cur.execute(query)
@@ -261,6 +266,17 @@ def getAllPost(connection, uid):
 
     return post
 
+def deletePost(connection, pid):
+
+    with connection.cursor() as cur:
+        query = """DELETE FROM Post WHERE pid = {0} """.format(pid)
+        
+        cur.execute(query)
+        connection.commit()
+
+    return True
+    
+
 def postComment(connection, uid, pid, comment):
 
     cid = None
@@ -268,8 +284,8 @@ def postComment(connection, uid, pid, comment):
     parsedComment = comment.replace("'", "''")
 
     with connection.cursor() as cur:
-        query = """ INSERT INTO Comments (pid, content, cdate, uid)
-                    VALUES({0}, '{1}', CURRENT_TIMESTAMP, {2})
+        query = """ INSERT INTO Comments (pid, content, cdate, ctime, uid)
+                    VALUES({0}, '{1}', CURRENT_TIMESTAMP, CURRENT_TIME, {2})
                     RETURNING cid""".format(pid, parsedComment, uid)
         
         cur.execute(query)
@@ -283,12 +299,21 @@ def getComment(connection, pid):
     comments = None
 
     with connection.cursor() as cur:
-        query = """ SELECT *
-         FROM Comments
-         WHERE pid = {0} """.format(pid)
+        query = """ SELECT cid, pid, content, cdate, ctime, Comments.uid, uname, avatar
+         FROM Comments, Users
+         WHERE pid = {0} AND Comments.uid = Users.uid
+         ORDER BY cdate DESC, ctime DESC  """.format(pid)
         
         cur.execute(query)
         comments = cur.fetchall()
         connection.commit()
 
     return comments
+
+def deleteComment(connection, cid):
+    with connection.cursor() as cur:
+        query = """DELETE FROM Comments WHERE cid = {0}""".format(cid)
+        cur.execute(query)
+        connection.commit()
+
+    return True
