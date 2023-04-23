@@ -119,9 +119,11 @@ def get_user():
 
     favorite_movie = None if len(user) < 4 else user[3]
 
+    avatar = user[2].decode('utf-8') if user[2] else "None"
+
     return {"id" : user[0],
             "name" : user[1],
-            "avatar": user[2],
+            "avatar": avatar,
             "favorite_movie": favorite_movie}
 
 @app.route("/user/avatar", methods=['PUT'])
@@ -141,9 +143,9 @@ def update_avatar():
     if not (id and avatar):
         abort(400, "missing required field")
 
-    result = DBService.updateAvatar(connection, id, avatar)
+    ok, msg = DBService.updateAvatar(connection, id, avatar)
 
-    return {"updated": result} 
+    return {"updated": ok, "message": msg}
 
 @app.route("/user/name", methods=['PUT'])
 def update_name():
@@ -162,9 +164,9 @@ def update_name():
     if not (id and name):
         abort(400, "missing required field")
 
-    result = DBService.updateName(connection, id, name)
+    ok, msg = DBService.updateName(connection, id, name)
 
-    return {"updated": result} 
+    return {"updated": ok, "message": msg} 
 
 @app.route('/user/FavoriteMovie', methods=['POST'])
 def addToFavorite():
@@ -302,7 +304,8 @@ def getWatchParty():
                 "ownerId": watchParty[1],
                 "movieId": watchParty[2],
                 "Date": watchParty[3],
-                "Platform": watchParty[4]
+                "atTime": watchParty[4].strftime('%H:%M'),
+                "Platform": watchParty[5]
                 })
     
     return {"result": result}
@@ -395,6 +398,7 @@ def getParticipatedWatchParty():
     print(queryresult)
 
     for watchParty in queryresult:
+        avatar = watchParty[7].decode('utf-8') if watchParty[7] else "None"
         result.append({"wid": watchParty[0],
                 "ownerId": watchParty[1],
                 "movieId": watchParty[2],
@@ -402,7 +406,7 @@ def getParticipatedWatchParty():
                 "time": watchParty[4].strftime('%H:%M'),
                 "Platform": watchParty[5],
                 "owner's Name": watchParty[6],
-                "owner's avatar": watchParty[7]
+                "owner's avatar": avatar
                 })
     
     return {"result": result}
@@ -475,6 +479,7 @@ def getUserPost():
     print("post:", posts)
 
     for p in posts:
+        avatar = p[8].decode('utf-8') if p[8] else "None"
         result.append({"pid": p[0],
                        "writer": p[1],
                        "movie_id": p[2],
@@ -483,7 +488,7 @@ def getUserPost():
                        "content": p[5],
                        "wid": p[6],
                        "writer's name": p[7],
-                       "writer's avatar": p[8]
+                       "writer's avatar": avatar
             })
         
     return {"result": result}
@@ -509,7 +514,10 @@ def getAllPost():
 
     result = []
 
+    print("posts:", posts)
+
     for p in posts:
+        avatar = p[8].decode('utf-8') if p[8] else "None"
         result.append({"pid": p[0],
                        "writer": p[1],
                        "movie_id": p[2],
@@ -518,7 +526,7 @@ def getAllPost():
                        "content": p[5],
                        "wid": p[6],
                        "writer's name": p[7],
-                       "writer's avatar": p[8]
+                       "writer's avatar": avatar
             })
         
     return {"result": result}
@@ -562,9 +570,9 @@ def postComment():
     if not (uid and pid and content):
         abort(400, "missing required field")
 
-    cid = DBService.postComment(connection, uid, pid, content)
+    ok, msg = DBService.postComment(connection, uid, pid, content)
 
-    return {"posted": True, "cid": cid}
+    return {"posted": ok, "cid/message": msg}
 
 @app.route("/comment", methods=["GET"])
 def getComment():
@@ -586,6 +594,7 @@ def getComment():
     result = []
 
     for c in comments:
+        avatar = c[7].decode('utf-8') if c[7] else "None"
         result.append({
             "cid": c[0],
             "pid": c[1],
@@ -594,7 +603,7 @@ def getComment():
             "time": c[4].strftime('%H:%M'),
             "user": c[5],
             "user name": c[6],
-            "user's avatar": c[7]
+            "user's avatar": avatar
         })
 
     return {"result":result}

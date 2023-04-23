@@ -36,15 +36,33 @@ def getUser(connection, id):
 
 def updateAvatar(connection, uid, avatar):
 
+    checkUserExist = "SELECT uid FROM Users WHERE uid = {0}".format(uid)
+    with connection.cursor() as cur:
+        cur.execute(checkUserExist)
+        userExist = cur.fetchone()
+        connection.commit()
+    
+    if not userExist:
+        return False, "user doesn't exist"
+
     query = "UPDATE Users SET avatar = CAST('{0}' AS BLOB) WHERE uid = {1}".format(avatar, uid)
 
     with connection.cursor() as cur:
         cur.execute(query)
         connection.commit()
 
-    return True
+    return True, "updated"
 
 def updateName(connection, uid, name):
+
+    checkUserExist = "SELECT uid FROM Users WHERE uid = {0}".format(uid)
+    with connection.cursor() as cur:
+        cur.execute(checkUserExist)
+        userExist = cur.fetchone()
+        connection.commit()
+    
+    if not userExist:
+        return False, "user doesn't exist"
 
     parsedName = name.replace("'", "''")
 
@@ -54,7 +72,7 @@ def updateName(connection, uid, name):
         cur.execute(query)
         connection.commit()
 
-    return True
+    return True, "updated"
     
 def addToFavoriteMovie(connection, uid, mid):
 
@@ -144,7 +162,9 @@ def deleteWatchParty(connection, wid):
 
 def getUserWatchParty(connection, uid):
     # find the wid first
-    query = "SELECT * FROM WatchParty WHERE ownerId = {0}".format(uid)
+    query = """SELECT wid, ownerId, movieId, Dates, atTime, Platform 
+        FROM WatchParty
+        WHERE ownerId = {0}""".format(uid)
 
     result = None
 
@@ -284,15 +304,19 @@ def postComment(connection, uid, pid, comment):
     parsedComment = comment.replace("'", "''")
 
     with connection.cursor() as cur:
-        query = """ INSERT INTO Comments (pid, content, cdate, ctime, uid)
-                    VALUES({0}, '{1}', CURRENT_TIMESTAMP, CURRENT_TIME, {2})
-                    RETURNING cid""".format(pid, parsedComment, uid)
-        
-        cur.execute(query)
-        cid = cur.fetchone()[0]
-        connection.commit()
+        try:
+            query = """ INSERT INTO Comments (pid, content, cdate, ctime, uid)
+                        VALUES({0}, '{1}', CURRENT_TIMESTAMP, CURRENT_TIME, {2})
+                        RETURNING cid""".format(pid, parsedComment, uid)
+            
+            cur.execute(query)
+            cid = cur.fetchone()[0]
+            connection.commit()
+        except psycopg.errors.ForeignKeyViolation:
+            connection.rollback()
+            return False, "ForeignKeyViolation"
 
-    return cid
+    return True, cid
 
 def getComment(connection, pid):
 
