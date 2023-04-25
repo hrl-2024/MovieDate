@@ -1,0 +1,1258 @@
+{
+	"info": {
+		"_postman_id": "25a1d5fc-f7af-4a2b-ba48-0ec2117bbc18",
+		"name": "Users",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_uid": "20443792-25a1d5fc-f7af-4a2b-ba48-0ec2117bbc18"
+	},
+	"item": [
+		{
+			"name": "POST",
+			"item": [
+				{
+					"name": "Cerate User",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "5d75601c-26aa-498c-8abb-8bee39a1376a",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "03007ea8-1ec8-482c-9af8-4a0fdbcc3359",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"hrl's friend3\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{backendURL}}/user",
+							"host": [
+								"{{backendURL}}"
+							],
+							"path": [
+								"user"
+							]
+						},
+						"description": "To create a user\n\nRequired Input Field:\n\n- name: user’s name\n    \n\nOptional input Field:\n\n- avatar: photo of the user\n    \n\nOUTPUT:\n\n- id: this user’s unique id"
+					},
+					"response": [
+						{
+							"id": "964d30c3-6246-4073-8347-1b660b3bbdbb",
+							"name": "Cerate User",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"hrl's friend3\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{backendURL}}/user",
+									"host": [
+										"{{backendURL}}"
+									],
+									"path": [
+										"user"
+									]
+								},
+								"description": "To create a user\n\nRequired Input Field:\n\n- name: user’s name\n    \n\nOptional input Field:\n\n- avatar: photo of the user\n    \n\nOUTPUT:\n\n- id: this user’s unique id"
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "Werkzeug/2.2.3 Python/3.10.0"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 22 Apr 2023 20:53:05 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "26"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": 858935739108261889\n}"
+						},
+						{
+							"id": "fc2efe60-7b2f-4ef0-8539-6f6d81faecf6",
+							"name": "Cerate User with avatar",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"hrl's friend3\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{backendURL}}/user",
+									"host": [
+										"{{backendURL}}"
+									],
+									"path": [
+										"user"
+									]
+								},
+								"description": "To create a user\n\nRequired Input Field:\n\n- name: user’s name\n    \n\nOptional input Field:\n\n- avatar: photo of the user\n    \n\nOUTPUT:\n\n- id: this user’s unique id"
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "Werkzeug/2.2.3 Python/3.10.0"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 22 Apr 2023 21:08:38 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "26"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": 858938797350584321\n}"
+						}
+					]
+				},
+				{
+					"name": "Add Favorite Movie",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "5d75601c-26aa-498c-8abb-8bee39a1376a",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "345e14e8-d5ba-416b-87c1-717d78c7a285",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\": 859065401220431873,\n    \"movie_id\": 123456\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{backendURL}}/user/FavoriteMovie",
+							"host": [
+								"{{backendURL}}"
+							],
+							"path": [
+								"user",
+								"FavoriteMovie"
+							]
+						},
+						"description": "Add a movie to user's favorite movie list\n\nRequired Input Field:\n\n- id: user’s id\n- movie_id: movie id in MovieDB\n    \n\nOUTPUT:\n\n- added\n    - true\n    - false: already in this user's favourite list"
+					},
+					"response": []
+				},
+				{
+					"name": "Add Friend",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "5d75601c-26aa-498c-8abb-8bee39a1376a",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "be47f505-b2cc-41ea-95b1-4af5ed1d772c",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"uid1\": 859065401220431873,\n    \"uid2\": 859065382518718465\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{backendURL}}/user/Friend",
+							"host": [
+								"{{backendURL}}"
+							],
+							"path": [
+								"user",
+								"Friend"
+							]
+						},
+						"description": "Add a friend for this user\n\nRequired Input Field:\n\n- uid1: user’s id\n- uid2: friend's id to be added\n    \n\nOUTPUT:\n\n- added\n    - true\n    - false: already friend"
+					},
+					"response": []
+				},
+				{
+					"name": "Create a Watch Party",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "5d75601c-26aa-498c-8abb-8bee39a1376a",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "a0624577-b6bc-4598-b503-47711daf8439",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n   \"uid\": 859065401220431873,\n   \"mid\": 12345,\n   \"date\": \"12-12-2022\",\n   \"time\": \"19:40\",\n   \"platform\": \"Netflix\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{backendURL}}/user/WatchParty",
+							"host": [
+								"{{backendURL}}"
+							],
+							"path": [
+								"user",
+								"WatchParty"
+							]
+						},
+						"description": "Add a friend for this user\n\nRequired Input Field:\n\n- uid: user’s id\n- mid: movie id\n- date: date of the watchParty, in valid string format\n    - Valid string format:\n        - YYYY-MM-DD\n        - MM-DD-YYYY\n        - MM-DD-YY (default)/YY-MM-DD/DD-MM-YY\n- time: the time of the day of the watchParty in string format\n    - Valid string format: \"hh:mm:ss\" or \"hh:mm\"\n    - Time is stored in .UTC time. Frontend need to convert it. Otherwise, it might reuslt in incorrect sorting result.\n- Platform: string for the platform\n    \n\nOutput:\n\n- created: true/false\n- message: error message if any\n- wid: if true, the watch party id created."
+					},
+					"response": [
+						{
+							"id": "e2ec4923-515f-4154-b215-0a7becd8079e",
+							"name": "Create a Watch Party (success sample)",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n   \"uid\": 859065401220431873,\n   \"mid\": 12345,\n   \"date\": \"12-12-2022\",\n   \"time\": \"19:40\",\n   \"platform\": \"Netflix\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{backendURL}}/user/WatchParty",
+									"host": [
+										"{{backendURL}}"
+									],
+									"path": [
+										"user",
+										"WatchParty"
+									]
+								},
+								"description": "Add a friend for this user\n\nRequired Input Field:\n\n- uid: user’s id\n- mid: movie id\n- date: date of the watchParty, in valid string format\n    - Valid string format:\n        - YYYY-MM-DD\n        - MM-DD-YYYY\n        - MM-DD-YY (default)/YY-MM-DD/DD-MM-YY\n- time: the time of the day of the watchParty in string format\n    - Valid string format: \"hh:mm:ss\" or \"hh:mm\"\n    - Time is stored in .UTC time. Frontend need to convert it. Otherwise, it might reuslt in incorrect sorting result.\n- Platform: string for the platform\n    \n\nOutput:\n\n- created: true/false\n- message: error message if any\n- wid: if true, the watch party id created."
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "Werkzeug/2.2.3 Python/3.10.0"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 22 Apr 2023 22:43:52 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "43"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"created:\": true,\n    \"wid\": 858957521712545793\n}"
+						},
+						{
+							"id": "69e943ba-dacd-4072-bc0d-5a57daa79933",
+							"name": "Create a Watch Party (fail sample)",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n   \"uid\": 859065401220431873,\n   \"mid\": 12345,\n   \"date\": \"12-12-2022\",\n   \"time\": \"19:40\",\n   \"platform\": \"Netflix\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{backendURL}}/user/WatchParty",
+									"host": [
+										"{{backendURL}}"
+									],
+									"path": [
+										"user",
+										"WatchParty"
+									]
+								},
+								"description": "Add a friend for this user\n\nRequired Input Field:\n\n- uid: user’s id\n- mid: movie id\n- date: date of the watchParty, in valid string format\n    - Valid string format:\n        - YYYY-MM-DD\n        - MM-DD-YYYY\n        - MM-DD-YY (default)/YY-MM-DD/DD-MM-YY\n- time: the time of the day of the watchParty in string format\n    - Valid string format: \"hh:mm:ss\" or \"hh:mm\"\n    - Time is stored in .UTC time. Frontend need to convert it. Otherwise, it might reuslt in incorrect sorting result.\n- Platform: string for the platform\n    \n\nOutput:\n\n- created: true/false\n- message: error message if any\n- wid: if true, the watch party id created."
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "Werkzeug/2.2.3 Python/3.10.0"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 22 Apr 2023 23:00:20 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "75"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"created:\": false,\n    \"message:\": \"\\\"date\\\" field in not in the right format.\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Join a Watch Party",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "5d75601c-26aa-498c-8abb-8bee39a1376a",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "0b0fb487-bbee-43e6-b74a-70fc1eeff6d3",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n   \"uid\": 858010050736422913,\n   \"wid\": 858988808421179393\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{backendURL}}/user/joinWatchParty",
+							"host": [
+								"{{backendURL}}"
+							],
+							"path": [
+								"user",
+								"joinWatchParty"
+							]
+						},
+						"description": "Add a friend for this user\n\nRequired Input Field:\n\n- uid: user’s id\n- wid: the Watch Party id\n    \n\nOutput:\n\n- added: true/false\n- message: error message if any"
+					},
+					"response": []
+				},
+				{
+					"name": "Join a Watch Party (not recommanded)",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "5d75601c-26aa-498c-8abb-8bee39a1376a",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "ea3b1973-3c34-47f4-abb3-efdf0c6c9390",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"participantID\": 858010050736422913,\n  \"organizerID\": 858010050732195841,\n  \"mid\": 12345,\n  \"date\": \"12-12-2022\",\n  \"time\": \"19:40\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{backendURL}}/user/joinWatchPartyWithNoID",
+							"host": [
+								"{{backendURL}}"
+							],
+							"path": [
+								"user",
+								"joinWatchPartyWithNoID"
+							]
+						},
+						"description": "Add a user to a particular Watch Party participant with no wid (watch party id)\n\nDo not recommand as we right now allow user to create multiple watch parties on the same movie at the same time. If multiple matches exists in DB, behavior is undefined.\n\nRequired Input Field:\n\n- participantID: participant's user id\n- organizerID: organizer's user id\n- mid: the movie id\n- date:\n    \n\nOutput:\n\n- added: true/false\n- message: error message if any"
+					},
+					"response": [
+						{
+							"id": "c508ba4f-dd47-4f7c-a469-8ce36e12345a",
+							"name": "Create a Watch Party",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"participantID\": 858010050736422913,\n  \"organizerID\": 858010050732195841,\n  \"mid\": 12345,\n  \"date\": \"12-12-2022\",\n  \"time\": \"19:40\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{backendURL}}/user/joinWatchPartyWithNoID",
+									"host": [
+										"{{backendURL}}"
+									],
+									"path": [
+										"user",
+										"joinWatchPartyWithNoID"
+									]
+								},
+								"description": "Add a user to a particular Watch Party participant with no wid (watch party id)\n\nDo not recommand as we right now allow user to create multiple watch parties on the same movie at the same time. If multiple matches exists in DB, behavior is undefined.\n\nRequired Input Field:\n\n- participantID: participant's user id\n- organizerID: organizer's user id\n- mid: the movie id\n- date:\n    \n\nOutput:\n\n- added: true/false\n- message: error message if any"
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "Werkzeug/2.2.3 Python/3.10.0"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 22 Apr 2023 22:43:52 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "43"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"created:\": true,\n    \"wid\": 858957521712545793\n}"
+						},
+						{
+							"id": "f6a70e4f-d88c-47a8-b4a4-80c9e7d67b69",
+							"name": "Create a Watch Party",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"participantID\": 858010050736422913,\n  \"organizerID\": 858010050732195841,\n  \"mid\": 12345,\n  \"date\": \"12-12-2022\",\n  \"time\": \"19:40\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{backendURL}}/user/joinWatchPartyWithNoID",
+									"host": [
+										"{{backendURL}}"
+									],
+									"path": [
+										"user",
+										"joinWatchPartyWithNoID"
+									]
+								},
+								"description": "Add a user to a particular Watch Party participant with no wid (watch party id)\n\nDo not recommand as we right now allow user to create multiple watch parties on the same movie at the same time. If multiple matches exists in DB, behavior is undefined.\n\nRequired Input Field:\n\n- participantID: participant's user id\n- organizerID: organizer's user id\n- mid: the movie id\n- date:\n    \n\nOutput:\n\n- added: true/false\n- message: error message if any"
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "Werkzeug/2.2.3 Python/3.10.0"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 22 Apr 2023 23:00:20 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "75"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"created:\": false,\n    \"message:\": \"\\\"date\\\" field in not in the right format.\"\n}"
+						}
+					]
+				}
+			],
+			"id": "5ca36a8e-dfb6-4861-99fb-607bf0614f96"
+		},
+		{
+			"name": "GET",
+			"item": [
+				{
+					"name": "Get User by ID",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "5d75601c-26aa-498c-8abb-8bee39a1376a",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "c8c96c56-5954-4cde-9955-77fc563787fa",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\": 859066469730942977\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{backendURL}}/user",
+							"host": [
+								"{{backendURL}}"
+							],
+							"path": [
+								"user"
+							]
+						},
+						"description": "To create a user\n\nRequired Input Field:\n\n- id: user’s id\n    \n\nOutput:\n\n- User's detail\n    - NOTE: avatar is converted to string format because of JSON limitation."
+					},
+					"response": [
+						{
+							"id": "403028b0-ffc3-44ad-8967-0c5494df7619",
+							"name": "Cerate User Copy",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"id\": 859066469730942977\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{backendURL}}/user",
+									"host": [
+										"{{backendURL}}"
+									],
+									"path": [
+										"user"
+									]
+								},
+								"description": "To create a user\n\nRequired Input Field:\n\n- id: user’s id\n    \n\nOutput:\n\n- User's detail\n    - NOTE: avatar is converted to string format because of JSON limitation."
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "Werkzeug/2.2.3 Python/3.10.0"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 22 Apr 2023 20:58:51 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "75"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"avatar\": null,\n    \"favorite_movie\": null,\n    \"id\": 858935639547412481,\n    \"name\": \"hrl\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Get Watch Party created by this user",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "5d75601c-26aa-498c-8abb-8bee39a1376a",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "7d100024-9539-4c10-aef8-f75050438005",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\": 858010050732195841\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{backendURL}}/user/WatchParty",
+							"host": [
+								"{{backendURL}}"
+							],
+							"path": [
+								"user",
+								"WatchParty"
+							]
+						},
+						"description": "To get this user's watch party\n\nRequired Input Field:\n\n- id: user’s id\n    \n\nOUTPUT:\n\n- a list of WatchParty with attribute if any"
+					},
+					"response": [
+						{
+							"id": "ec06ef43-110d-4702-a42d-ce6550f33286",
+							"name": "Get Watch Party",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"id\": 858010050732195841\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{backendURL}}/user/WatchParty",
+									"host": [
+										"{{backendURL}}"
+									],
+									"path": [
+										"user",
+										"WatchParty"
+									]
+								},
+								"description": "To get this user's watch party\n\nRequired Input Field:\n\n- id: user’s id\n    \n\nOUTPUT:\n\n- a list of WatchParty with attribute if any"
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "Werkzeug/2.2.3 Python/3.10.0"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 22 Apr 2023 23:18:00 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "675"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"result\": [\n        {\n            \"Date\": \"Mon, 12 Dec 2022 00:00:00 GMT\",\n            \"Platform\": \"Netflix\",\n            \"movieId\": 12345,\n            \"ownerId\": 858010050732195841,\n            \"wid\": 858014660609343489\n        },\n        {\n            \"Date\": \"Mon, 12 Dec 2022 00:00:00 GMT\",\n            \"Platform\": \"Apple TV+\",\n            \"movieId\": 12345,\n            \"ownerId\": 858010050732195841,\n            \"wid\": 858915213967851521\n        },\n        {\n            \"Date\": \"Mon, 12 Dec 2022 00:00:00 GMT\",\n            \"Platform\": \"Netflix\",\n            \"movieId\": 12345,\n            \"ownerId\": 858010050732195841,\n            \"wid\": 858957521712545793\n        },\n        {\n            \"Date\": \"Sat, 24 Dec 2022 00:00:00 GMT\",\n            \"Platform\": \"Netflix\",\n            \"movieId\": 12345,\n            \"ownerId\": 858010050732195841,\n            \"wid\": 858960690497945601\n        },\n        {\n            \"Date\": \"Mon, 12 Dec 2022 00:00:00 GMT\",\n            \"Platform\": \"Netflix\",\n            \"movieId\": 12345,\n            \"ownerId\": 858010050732195841,\n            \"wid\": 858961081762054145\n        }\n    ]\n}"
+						}
+					]
+				},
+				{
+					"name": "Get Participated Watch Party",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "5d75601c-26aa-498c-8abb-8bee39a1376a",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "d6660af1-c733-45a9-b23a-c7634d0ee6cb",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"uid\": 858010050736422913\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{backendURL}}/user/getParticipatedWatchParty",
+							"host": [
+								"{{backendURL}}"
+							],
+							"path": [
+								"user",
+								"getParticipatedWatchParty"
+							]
+						},
+						"description": "To get this user's watch party\n\nRequired Input Field:\n\n- id: user’s id\n    \n\nOUTPUT:\n\n- a list of WatchParty with attribute if any"
+					},
+					"response": [
+						{
+							"id": "9e06bd6e-a3f7-4e14-8a76-23d30934889b",
+							"name": "Get Participated Watch Party",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"uid\": 858010050736422913\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{backendURL}}/user/getParticipatedWatchParty",
+									"host": [
+										"{{backendURL}}"
+									],
+									"path": [
+										"user",
+										"getParticipatedWatchParty"
+									]
+								},
+								"description": "To get this user's watch party\n\nRequired Input Field:\n\n- id: user’s id\n    \n\nOUTPUT:\n\n- a list of WatchParty with attribute if any"
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "Werkzeug/2.2.3 Python/3.10.0"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 23 Apr 2023 06:14:28 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "208"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"result\": [\n        {\n            \"Date\": \"Mon, 12 Dec 2022 00:00:00 GMT\",\n            \"Platform\": \"Netflix\",\n            \"movieId\": 12345,\n            \"owner's Name\": \"John Doe\",\n            \"owner's avatar\": null,\n            \"ownerId\": 858010050732195841,\n            \"time\": \"19:40\",\n            \"wid\": 858988808421179393\n        }\n    ]\n}"
+						}
+					]
+				}
+			],
+			"id": "41ce74c4-7df9-4c4c-bfb9-ac2655f632b0"
+		},
+		{
+			"name": "PUT",
+			"item": [
+				{
+					"name": "Update User Avatar",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "5d75601c-26aa-498c-8abb-8bee39a1376a",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "072939be-b4db-4162-ac03-cb4a229d425d",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\": 859065382518718465,\n    \"avatar\": 1234423554\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{backendURL}}/user/avatar",
+							"host": [
+								"{{backendURL}}"
+							],
+							"path": [
+								"user",
+								"avatar"
+							]
+						},
+						"description": "For updating the user’s avatar\n\nINPUT:\n\n- id: user id\n- avatar: image binary\n    \n\nOUTPUT:\n\n- \"updated\": true"
+					},
+					"response": [
+						{
+							"id": "18a9179e-0099-4c3d-bde2-25a7bf47fb6d",
+							"name": "Update User Avatar",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"id\": 859065382518718465,\n    \"avatar\": 1234423554\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{backendURL}}/user/avatar",
+									"host": [
+										"{{backendURL}}"
+									],
+									"path": [
+										"user",
+										"avatar"
+									]
+								},
+								"description": "For updating the user’s avatar\n\nINPUT:\n\n- id: user id\n- avatar: image binary\n    \n\nOUTPUT:\n\n- \"updated\": true"
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "Werkzeug/2.2.3 Python/3.10.0"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 23 Apr 2023 08:11:12 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "49"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"user doesn't exist\",\n    \"updated\": false\n}"
+						}
+					]
+				},
+				{
+					"name": "Update User Name",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "5d75601c-26aa-498c-8abb-8bee39a1376a",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "10310b12-922f-4db1-9171-c502c69aad20",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\": 858938797350584321,\n    \"name\": \"hrl's friend 2\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{backendURL}}/user/name",
+							"host": [
+								"{{backendURL}}"
+							],
+							"path": [
+								"user",
+								"name"
+							]
+						},
+						"description": "For updating the user’s name\n\nINPUT:\n\n- id: user id\n- name: new name\n    \n\nOUTPUT:\n\n- \"updated\": true/false\n- message: error message if any"
+					},
+					"response": [
+						{
+							"id": "08c3ccba-8e52-41b4-8048-a27ecf0cf862",
+							"name": "Update User Name",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"id\": 858938797350584321,\n    \"name\": \"hrl's friend 2\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{backendURL}}/user/name",
+									"host": [
+										"{{backendURL}}"
+									],
+									"path": [
+										"user",
+										"name"
+									]
+								},
+								"description": "For updating the user’s name\n\nINPUT:\n\n- id: user id\n- name: new name\n    \n\nOUTPUT:\n\n- \"updated\": true/false\n- message: error message if any"
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "Werkzeug/2.2.3 Python/3.10.0"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 23 Apr 2023 08:09:27 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "37"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"updated\",\n    \"updated\": true\n}"
+						}
+					]
+				}
+			],
+			"id": "5987d80e-4efd-4bf1-a38d-b2ea6632cf59"
+		},
+		{
+			"name": "DELETE",
+			"item": [
+				{
+					"name": "Delete From Favorite Movie",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "5d75601c-26aa-498c-8abb-8bee39a1376a",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "a409e7cd-1a57-46af-89f3-2083fd74f84f",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\": 859065401220431873,\n    \"movie_id\": 123456\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{backendURL}}/user/FavoriteMovie",
+							"host": [
+								"{{backendURL}}"
+							],
+							"path": [
+								"user",
+								"FavoriteMovie"
+							]
+						},
+						"description": "Add a movie to user's favorite movie list\n\nRequired Input Field:\n\n- id: user’s id\n- movie_id: movie id in MovieDB\n    \n\nOUTPUT:\n\n- removed: true\n- Always true"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete a Friend",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "5d75601c-26aa-498c-8abb-8bee39a1376a",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "7b5736b2-ca52-441e-a120-7dfc9adc8a0c",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"uid1\": 859065401220431873,\n    \"uid2\": 859065382518718465\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{backendURL}}/user/Friend",
+							"host": [
+								"{{backendURL}}"
+							],
+							"path": [
+								"user",
+								"Friend"
+							]
+						},
+						"description": "Delete a friend for this user\n\nRequired Input Field:\n\n- uid1: user’s id\n- uid2: friend's id to be deleted\n    \n\nOUTPUT:\n\n- removed: true\n    - should be always true"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete a Watch Party",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "5d75601c-26aa-498c-8abb-8bee39a1376a",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "5defefd9-d4d5-467c-841c-295c4d100a5f",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"wid\": 858014660609343489\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{backendURL}}/user/WatchParty",
+							"host": [
+								"{{backendURL}}"
+							],
+							"path": [
+								"user",
+								"WatchParty"
+							]
+						},
+						"description": "Delete a watch party\n\nRequired Input Field:\n\n- wid:\n    \n\nOUTPUT:\n\n- removed: true\n    - should be always true"
+					},
+					"response": []
+				}
+			],
+			"id": "c7ce17fe-db9d-45d5-98b2-c0382cb73fbe"
+		}
+	]
+}
