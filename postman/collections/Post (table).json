@@ -1,0 +1,378 @@
+{
+	"info": {
+		"_postman_id": "cf025ec0-3278-4d23-aff3-8b3620e383ee",
+		"name": "Post (table)",
+		"description": "For all query related to Table Post",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_uid": "20443792-cf025ec0-3278-4d23-aff3-8b3620e383ee"
+	},
+	"item": [
+		{
+			"name": "POST",
+			"item": [
+				{
+					"name": "Create Post",
+					"id": "7fabff07-c612-4cd6-b21e-f7a1756c169c",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"uid\": 859065382518718465,\n    \"movie_id\": \"12345\",\n    \"content\": \"Sample Post 1\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{backendURL}}/user/post",
+							"host": [
+								"{{backendURL}}"
+							],
+							"path": [
+								"user",
+								"post"
+							]
+						},
+						"description": "Create post with watch party\n\nRequired Input field:\n\n- uid\n- movie_id\n- content\n    \n\nOptional input field:\n\n- newWatchParty: bool. Indicating if this post is creating a new WatchParty\n    - Default to False\n    - If true, following fields are required:\n        - date: date of the watch party\n        - time: time of the day of the watch party\n        - platform: string for the holding platform\n\nOutput:\n\n- created: boolean\n- pid: the created pid"
+					},
+					"response": [
+						{
+							"id": "73f4db8e-1c8e-44d4-a407-61851e3b28a1",
+							"name": "Create Post (Pure Movie Review)",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"uid\": 859065382518718465,\n    \"movie_id\": \"12345\",\n    \"content\": \"Sample Post 1\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{backendURL}}/user/post",
+									"host": [
+										"{{backendURL}}"
+									],
+									"path": [
+										"user",
+										"post"
+									]
+								},
+								"description": "Create post with watch party\n\nRequired Input field:\n\n- uid\n- movie_id\n- content\n    \n\nOptional input field:\n\n- newWatchParty: bool. Indicating if this post is creating a new WatchParty\n    - Default to False\n    - If true, following fields are required:\n        - date: date of the watch party\n        - time: time of the day of the watch party\n        - platform: string for the holding platform\n\nOutput:\n\n- created: boolean\n- pid: the created pid"
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "Werkzeug/2.2.3 Python/3.10.0"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 23 Apr 2023 07:06:59 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "42"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"created\": true,\n    \"pid\": 859056438377545729\n}"
+						},
+						{
+							"id": "c94224cf-8567-44a8-bee6-53ad8e4e7e81",
+							"name": "Create Post with Watch Party",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"uid\": 859065382518718465,\n    \"movie_id\": \"12345\",\n    \"content\": \"Sample Post 1\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{backendURL}}/user/post",
+									"host": [
+										"{{backendURL}}"
+									],
+									"path": [
+										"user",
+										"post"
+									]
+								},
+								"description": "Create post with watch party\n\nRequired Input field:\n\n- uid\n- movie_id\n- content\n    \n\nOptional input field:\n\n- newWatchParty: bool. Indicating if this post is creating a new WatchParty\n    - Default to False\n    - If true, following fields are required:\n        - date: date of the watch party\n        - time: time of the day of the watch party\n        - platform: string for the holding platform\n\nOutput:\n\n- created: boolean\n- pid: the created pid"
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "Werkzeug/2.2.3 Python/3.10.0"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 23 Apr 2023 06:45:08 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "42"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"created\": true,\n    \"pid\": 859052140495732737\n}"
+						}
+					]
+				}
+			],
+			"id": "95b9bdb7-88a3-42b1-8786-85858309d406",
+			"description": "For all query related to post (create) in this table"
+		},
+		{
+			"name": "GET",
+			"item": [
+				{
+					"name": "Get all user's post",
+					"id": "3297bbfe-8a90-4380-ba3e-942cd7ba55a1",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"uid\": 859065382518718465\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{backendURL}}/user/post",
+							"host": [
+								"{{backendURL}}"
+							],
+							"path": [
+								"user",
+								"post"
+							]
+						},
+						"description": "Get all posts by this user, with newest post on the top\n\nRequired Input field:\n\n- uid: user's id\n    \n\nOutput:\n\n- list of post with attribute if any"
+					},
+					"response": [
+						{
+							"id": "8a0df962-23da-4b9c-bfea-2d193c4f02d0",
+							"name": "Get all user's post",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"uid\": 859065382518718465\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{backendURL}}/user/post",
+									"host": [
+										"{{backendURL}}"
+									],
+									"path": [
+										"user",
+										"post"
+									]
+								},
+								"description": "Get all posts by this user, with newest post on the top\n\nRequired Input field:\n\n- uid: user's id\n    \n\nOutput:\n\n- list of post with attribute if any"
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "Werkzeug/2.2.3 Python/3.10.0"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 23 Apr 2023 07:20:56 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "489"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"result\": [\n        {\n            \"content\": \"Random post 2 \",\n            \"movie_id\": 12345,\n            \"pdate\": \"Sun, 23 Apr 2023 00:00:00 GMT\",\n            \"pid\": 859057453782237185,\n            \"ptime\": \"07:12\",\n            \"wid\": null,\n            \"writer\": 858010050736422913,\n            \"writer's avatar\": null,\n            \"writer's name\": \"Jona Doe\"\n        },\n        {\n            \"content\": \"Yes! \\\"CODA\\\" is pretty good! I'd love to watch it again! \",\n            \"movie_id\": 12345,\n            \"pdate\": \"Sun, 23 Apr 2023 00:00:00 GMT\",\n            \"pid\": 859056438377545729,\n            \"ptime\": \"07:06\",\n            \"wid\": null,\n            \"writer\": 858010050736422913,\n            \"writer's avatar\": null,\n            \"writer's name\": \"Jona Doe\"\n        }\n    ]\n}"
+						}
+					]
+				},
+				{
+					"name": "Get all post",
+					"id": "658fde50-edd8-4dba-b8d4-9e5b0b77fb44",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"uid\": 859065382518718465\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{backendURL}}/post",
+							"host": [
+								"{{backendURL}}"
+							],
+							"path": [
+								"post"
+							]
+						},
+						"description": "Retrieve all posts visible to this user (user’s own post and his followers)\n\nRequired input:\n\n- uid: user's id\n    \n\nOutput:\n\n- list of post with attribute if any"
+					},
+					"response": [
+						{
+							"id": "4de181fb-5bf6-4eb7-b759-1123f2e12ef2",
+							"name": "Get all post",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"uid\": 859065382518718465\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{backendURL}}/post",
+									"host": [
+										"{{backendURL}}"
+									],
+									"path": [
+										"post"
+									]
+								},
+								"description": "Retrieve all posts visible to this user (user’s own post and his followers)\n\nRequired input:\n\n- uid: user's id\n    \n\nOutput:\n\n- list of post with attribute if any"
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "Werkzeug/2.2.3 Python/3.10.0"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 23 Apr 2023 07:21:27 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "489"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"result\": [\n        {\n            \"content\": \"Yes! \\\"CODA\\\" is pretty good! I'd love to watch it again! \",\n            \"movie_id\": 12345,\n            \"pdate\": \"Sun, 23 Apr 2023 00:00:00 GMT\",\n            \"pid\": 859056438377545729,\n            \"ptime\": \"07:06\",\n            \"wid\": null,\n            \"writer\": 858010050736422913,\n            \"writer's avatar\": null,\n            \"writer's name\": \"Jona Doe\"\n        },\n        {\n            \"content\": \"Random post 2 \",\n            \"movie_id\": 12345,\n            \"pdate\": \"Sun, 23 Apr 2023 00:00:00 GMT\",\n            \"pid\": 859057453782237185,\n            \"ptime\": \"07:12\",\n            \"wid\": null,\n            \"writer\": 858010050736422913,\n            \"writer's avatar\": null,\n            \"writer's name\": \"Jona Doe\"\n        }\n    ]\n}"
+						}
+					]
+				}
+			],
+			"id": "93a94ac5-ec6e-41dc-91e6-e1bfafe8f92e"
+		},
+		{
+			"name": "DELETE",
+			"item": [
+				{
+					"name": "Delete a post",
+					"id": "08288982-b199-47bf-b1d2-7ad1ae28e5c3",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"pid\": 859072335134326785\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{backendURL}}/post",
+							"host": [
+								"{{backendURL}}"
+							],
+							"path": [
+								"post"
+							]
+						},
+						"description": "Retrieve all posts visible to this user (user’s own post and his followers)\n\nRequired input:\n\n- uid: user's id"
+					},
+					"response": []
+				}
+			],
+			"id": "d29024de-993e-4f3b-941e-3fc7e2a38259"
+		}
+	]
+}

@@ -1,0 +1,158 @@
+{
+	"info": {
+		"_postman_id": "df87f22c-e90c-488f-92a9-f28de5119f4d",
+		"name": "Comments",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_uid": "20443792-df87f22c-e90c-488f-92a9-f28de5119f4d"
+	},
+	"item": [
+		{
+			"name": "Post a comment",
+			"id": "f7da9a7d-be35-4cda-b1aa-e8f2b07915bd",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"uid\": 859065382518718465,\n    \"pid\": 859074058531504129,\n    \"content\": \"Sample Comment 1\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{backendURL}}/comment",
+					"host": [
+						"{{backendURL}}"
+					],
+					"path": [
+						"comment"
+					]
+				},
+				"description": "Post a commment on a post\n\nRequired field:\n\n- uid: user's id\n- pid: post id\n- content: string for the comment content\n    \n\nOutput:\n\n- posted: boolean\n    - cid: the comment id"
+			},
+			"response": []
+		},
+		{
+			"name": "Get all comments on a Post",
+			"id": "47ad82e8-bb73-416d-a0de-80f820ca2af9",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"pid\": 859074058531504129\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{backendURL}}/comment",
+					"host": [
+						"{{backendURL}}"
+					],
+					"path": [
+						"comment"
+					]
+				},
+				"description": "Get all commments on a post\n\nRequired field:\n\n- pid: post id\n    \n\nOutput:\n\n- list of comments if any"
+			},
+			"response": [
+				{
+					"id": "3bbbe0f2-2a2b-4360-be74-a97ab6dc9d37",
+					"name": "Get all comments on a Post",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"pid\": 859074058531504129\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{backendURL}}/comment",
+							"host": [
+								"{{backendURL}}"
+							],
+							"path": [
+								"comment"
+							]
+						},
+						"description": "Get all commments on a post\n\nRequired field:\n\n- pid: post id\n    \n\nOutput:\n\n- list of comments if any"
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Server",
+							"value": "Werkzeug/2.2.3 Python/3.10.0"
+						},
+						{
+							"key": "Date",
+							"value": "Sun, 23 Apr 2023 07:38:06 GMT"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Content-Length",
+							"value": "233"
+						},
+						{
+							"key": "Connection",
+							"value": "close"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"result\": [\n        {\n            \"cid\": 859061160070479873,\n            \"content\": \"Good comment! \\\"CODA\\\" is good!\",\n            \"date\": \"Sun, 23 Apr 2023 00:00:00 GMT\",\n            \"pid\": 859056438377545729,\n            \"time\": \"07:31\",\n            \"user\": 858010050732195841,\n            \"user name\": \"John Doe\",\n            \"user's avatar\": null\n        }\n    ]\n}"
+				}
+			]
+		},
+		{
+			"name": "Delete a comment",
+			"id": "ded6fd59-e6b3-41d8-924d-601830f4fec5",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"cid\": 859074125181124609\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{backendURL}}/comment",
+					"host": [
+						"{{backendURL}}"
+					],
+					"path": [
+						"comment"
+					]
+				},
+				"description": "Get all commments on a post\n\nRequired field:\n\n- cid: comment's id\n    \n\nOutput:\n\n- deleted: true\n    - should be always true"
+			},
+			"response": []
+		}
+	]
+}

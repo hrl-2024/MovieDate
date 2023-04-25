@@ -1,0 +1,1 @@
+INSERT INTO Users (uname, avatar) VALUES ('{name}', NULL);

@@ -2,4 +2,5 @@
 *crudential.json
 *CACert.sh
 __pycache__/
+api_layer/__pycache__/
 database_layer/__pycache__/

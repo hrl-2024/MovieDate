@@ -1,5 +1,4 @@
-import logging
-import os
+import argparse
 import psycopg
 from psycopg.errors import ProgrammingError
 import json
@@ -12,13 +11,18 @@ if __name__ == "__main__":
 
     connection = psycopg.connect(credential_data['General_connection_string'], application_name="$moviedate")
 
-    create_query_file = open("dbinit.sql", "r")
-
-    create_query = create_query_file.read()
+    query = """CREATE TABLE Likes(
+	pid INT NOT NULL,
+    uid INT NOT NULL,
+    PRIMARY KEY(pid,uid),
+    CONSTRAINT Likes_FK_uid FOREIGN KEY (uid) REFERENCES Users(uid) ON DELETE CASCADE,
+    CONSTRAINT Likes_FK_pid FOREIGN KEY (pid) REFERENCES Post(pid) ON DELETE CASCADE
+)"""
 
     with connection.cursor() as cur:
-        cur.execute(create_query)
+        cur.execute(query)
+        # res = cur.fetchall()
         connection.commit()
-
+    
     # Close communication with the database
     connection.close()
