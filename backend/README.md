@@ -21,3 +21,15 @@ Dependency: flask, flask-ngrok, psycopg[binary]
 # Backend Architecture
 
 ![](https://i.imgur.com/prZvAuV.png)
+
+# [CockroachDB ER diagram (Click to view)](https://docs.google.com/drawings/d/1RlKlOd8FNrVaUYEe0mKbFvWQwE01w1iYAO5jRxI3yEI/edit?usp=sharing)
+
+All data are stored on a distributed sql database system on AWS (Amazon Web Services), powered by CockroachDB.
+
+Screenshot at Apr 26 (maybe out of date. Please use the link above to view the most updated ER):
+![](https://i.imgur.com/OSZbOsV.png)
+
+# API Documentation
+- [All query related to Users](https://documenter.getpostman.com/view/20443792/2s93Y6tf49#6b81b564-be9c-4da4-b918-5cf07e6da7ea)
+- [All query related to Post](https://documenter.getpostman.com/view/20443792/2s93Y6tf8T)
+- [All query related to a post's comment in MovieDate](https://documenter.getpostman.com/view/20443792/2s93Y6tf8V)

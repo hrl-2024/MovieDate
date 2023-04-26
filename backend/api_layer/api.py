@@ -84,16 +84,46 @@ def insert_user():
     
     name = data.get('name')
     avatar = data.get('avatar')
+    email = data.get('email')
+    password = data.get('password')
 
-    if not name:
-        abort(400, "name field is missing")
+    if not (name and email and password):
+        abort(400, "missing required field")
 
-    print(name)
+    # hash the password before passing in to the database service layer
+    ok, message = DBService.insert_user(connection, name, avatar, email, hash(password))
 
-    id = DBService.insert_user(connection, name, avatar)
-    print(id)
+    if ok:
+        return {"success": True, "id" : message}
+    else:
+        return {"success": False, "message" : message}
+    
+@app.route('/oauthuser', methods=['POST'])
+def insert_oauthuser():
 
-    return {"id" : id}
+    data = {}
+
+    if request.is_json:
+        data = request.json
+    else:
+        print("received non-json object, converting to json")
+        data = json.loads(request.data)
+    
+    id = data.get('id')
+    name = data.get('name')
+    avatar = data.get('avatar')
+    email = data.get('email')
+
+    if not (id and name and email):
+        abort(400, "missing required field")
+
+    # hash the password before passing in to the database service layer
+    ok, message = DBService.insert_oauthuser(connection, id, name, email, avatar)
+
+    if ok:
+        return {"success": True, "id" : message}
+    else:
+        return {"success": False, "message" : message}
 
 @app.route('/user', methods=['GET'])
 def get_user():
@@ -107,24 +137,52 @@ def get_user():
         data = json.loads(request.data)
     
     id = data.get('id')
+    email = data.get('email')
     
-    if not id:
-        abort(400, "id field is missing")
+    if not (id or email):
+        abort(400, "need at least one field: id or email")
 
-    user = DBService.getUser(connection, id)
-    print(user)
+    if id:
+        user = DBService.getUserById(connection, id)
+        print(user)
 
-    if user == None:
-        return {"message": "User doesn't exist."}
+        if user == None:
+            return {"found": False, "message": "User doesn't exist."}
 
-    favorite_movie = None if len(user) < 4 else user[3]
+        favorite_movie = None if len(user) < 5 else user[4]
 
-    avatar = user[2].decode('utf-8') if user[2] else "None"
+        avatar = user[3].decode('utf-8') if user[3] else "None"
 
-    return {"id" : user[0],
-            "name" : user[1],
-            "avatar": avatar,
-            "favorite_movie": favorite_movie}
+        return {"found": True, 
+                "id" : user[0],
+                "name" : user[1],
+                "email": user[2],
+                "avatar": avatar,
+                "favorite_movie": favorite_movie}
+    else:
+        # get the password
+        password = data.get("password")
+
+        if not password:
+            abort(400, "If email is used to look up user, password field is required.")
+
+        user = DBService.getUserByEmail(connection, email, hash(password))
+        print(user)
+
+        if user == None:
+            return {"found": False, "message": "User doesn't exist/password is wrong."}
+
+        favorite_movie = None if len(user) < 5 else user[4]
+
+        avatar = user[3].decode('utf-8') if user[3] else "None"
+
+        return {"found": True, 
+                "id" : user[0],
+                "name" : user[1],
+                "email": user[2],
+                "avatar": avatar,
+                "favorite_movie": favorite_movie}
+
 
 @app.route("/user/avatar", methods=['PUT'])
 def update_avatar():
@@ -628,6 +686,16 @@ def deleteComment():
 
     return {"deleted": ok}
 
+def ensure_pythonhashseed(seed='0'):
+    current_seed = os.environ.get("PYTHONHASHSEED")
+
+    if current_seed is None or current_seed != seed:
+        print(f'Setting PYTHONHASHSEED="{seed}"')
+        os.environ["PYTHONHASHSEED"] = seed
+        # restart the current process
+        os.execl(sys.executable, sys.executable, *sys.argv)
+
 if __name__ == '__main__':
     # app.run(debug=True)
+    ensure_pythonhashseed(credential_data["password_hash_key"])  # to ensure hash value stays consistent across all sessions and servers
     app.run(port=5002)

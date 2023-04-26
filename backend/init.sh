@@ -4,7 +4,12 @@
 pip3 install "psycopg[binary]"
 python3 -m pip install flask
 brew install ngrok/ngrok/ngrok
+<<<<<<< HEAD
 pip3 install flask-ngrok
+=======
+pip install flask-ngrok
+pip3 install Flask-OAuthlib
+>>>>>>> 2c588f42aa33a12fc6fcec5b8718368c8f06d686
 
 DATABASE_URL=$(jq .General_connection_string crudential.json)
 echo $DATABASE_URL
