@@ -16,7 +16,7 @@ const Register = ({navigation}) => {
       method: 'POST',
       body: raw,
       redirect: 'follow'
-    };
+    }; 
 
     fetch("http://127.0.0.1:5002/user", requestOptions)
       .then(response => response.text())
