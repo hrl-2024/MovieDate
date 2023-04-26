@@ -2,28 +2,59 @@ import psycopg
 from psycopg.errors import ProgrammingError
 
 # Create the user and return the uid of the user
-def insert_user(connection, name : str, avatar=None):
+def insert_user(connection, name : str, avatar, email, password):
 
     parsedName = name.replace("'", "''")
+    parsedEmail = email.replace("'", "''")
+    parsedpassword = str(password).replace("'", "''")
 
-    query = """INSERT INTO Users (uname) VALUES ('{uname}') RETURNING uid""".format(uname = parsedName)
+    query = """INSERT INTO Users (uname, email, pwd) VALUES ('{0}', '{1}', '{2}') RETURNING uid""".format(parsedName, parsedEmail, parsedpassword)
 
     if avatar:
-        query = """INSERT INTO Users (uname, avatar) VALUES ('{0}', CAST('{1}' AS BLOB) )
-        RETURNING uid""".format(parsedName, avatar)
+        query = """INSERT INTO Users (uname, avatar, email, pwd) VALUES ('{0}', CAST('{1}' AS BLOB), '{2}', '{3}' )
+        RETURNING uid""".format(parsedName, avatar, parsedEmail, parsedpassword)
 
     id = None
 
     with connection.cursor() as cur:
-        cur.execute(query)
-        id = cur.fetchone()
-        connection.commit()
+        try:
+            cur.execute(query)
+            id = cur.fetchone()
+            connection.commit()
+        except psycopg.errors.UniqueViolation as e:
+            connection.rollback()
+            return False, f"Error: {e}"
 
-    return id[0]
+    return True, id[0]
 
-def getUser(connection, id):
+# Create the user and return the uid of the user
+def insert_oauthuser(connection, id, name, email, avatar):
+
+    parsedName = name.replace("'", "''")
+    parsedEmail = email.replace("'", "''")
+
+    query = """INSERT INTO Users (uid, uname, email) VALUES ('{0}', '{1}', '{2}') RETURNING uid""".format(id, parsedName, parsedEmail)
+
+    if avatar:
+        query = """INSERT INTO Users (uid, uname, email, avatar) VALUES ('{0}', '{1}', '{2}', CAST('{3}' AS BLOB) )
+        RETURNING uid""".format(id, parsedName, parsedEmail, avatar)
+
+    id = None
+
+    with connection.cursor() as cur:
+        try:
+            cur.execute(query)
+            id = cur.fetchone()
+            connection.commit()
+        except psycopg.errors.UniqueViolation as e:
+            connection.rollback()
+            return False, f"Error: {e}"
+
+    return True, id[0]
+
+def getUserById(connection, id):
     
-    query = "SELECT * FROM Users WHERE uid = {uid}".format(uid = id)
+    query = "SELECT uid, uname, email, avatar, favormovies FROM Users WHERE uid = {uid}".format(uid = id)
 
     user = None
 
@@ -33,6 +64,26 @@ def getUser(connection, id):
         connection.commit()
 
     return user
+
+def getUserByEmail(connection, email, password):
+
+    parsedEmail = email.replace("'", "''")
+    parsedpassword = str(password).replace("'", "''")
+
+    print("password      :", password)
+    print("parsedpassword:", parsedpassword)
+    
+    query = "SELECT uid, uname, email, avatar, favormovies FROM Users WHERE email = '{0}' AND pwd = '{1}'".format(parsedEmail, parsedpassword)
+
+    user = None
+
+    with connection.cursor() as cur:
+        cur.execute(query)
+        user = cur.fetchone()
+        connection.commit()
+
+    return user
+
 
 def updateAvatar(connection, uid, avatar):
 

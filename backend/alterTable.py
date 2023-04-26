@@ -11,7 +11,7 @@ if __name__ == "__main__":
 
     connection = psycopg.connect(credential_data['General_connection_string'], application_name="$moviedate")
 
-    query = """DELETE FROM TABLE """
+    query = """INSERT INTO Users (uid, uname, email, pwd) VALUES (1, 'hrl', 'hrl@bu.edu', '12345')"""
 
     with connection.cursor() as cur:
         cur.execute(query)
