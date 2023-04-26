@@ -9,13 +9,26 @@ const Register = ({navigation}) => {
   const [passwordConfirmation, setPasswordConfirmation] = useState('');
 
   const register = () => {
-    // Implement registration logic here
-  };
+    
+    var raw = "{\n    \"name\": \”Andrew\”,\n    \"avatar\": 1234234235\n}";
+
+    var requestOptions = {
+      method: 'POST',
+      body: raw,
+      redirect: 'follow'
+    };
+
+    fetch("http://127.0.0.1:5002/user", requestOptions)
+      .then(response => response.text())
+      .then(result => console.log(result))
+      .catch(error => console.log('error', error));
+};
 
   const login = () => {
     // Implement login logic here
     navigation.navigate('Home');
   };
+  
 
   return (
     <View style={styles.form}>

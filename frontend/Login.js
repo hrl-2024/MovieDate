@@ -11,9 +11,26 @@ const Login = ({navigation}) => {
   const [password, setPassword] = useState('');
   const [passwordConfirmation, setPasswordConfirmation] = useState('');
 
-  const Register = () => {
-    // Implement registration logic here
-  };
+  const register = () => {
+    
+    var raw = {
+      "id": 23456643,
+      "name": "Minos's friend",
+      "email": "minosg@email",
+      "avatar": 12345666
+  }
+
+    var requestOptions = {
+      method: 'POST',
+      body: JSON.stringify(raw),
+      redirect: 'follow'
+    };
+
+    fetch("http://127.0.0.1:5002/oauthuser", requestOptions)
+      .then(response => response.text())
+      .then(result => console.log(result))
+      .catch(error => console.log('error', error));
+};
 
 
 
@@ -63,7 +80,7 @@ const Login = ({navigation}) => {
           secureTextEntry
         />
 
-        <TouchableOpacity style={styles.button} onPress={handleMovieDetail}>
+        <TouchableOpacity style={styles.button} onPress={register}>
           <Text style={styles.buttonText}>Register</Text>
         </TouchableOpacity>
 
