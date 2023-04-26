@@ -4,3 +4,4 @@
 __pycache__/
 api_layer/__pycache__/
 database_layer/__pycache__/
+googleOauthSecret.json

@@ -20,6 +20,8 @@ CREATE TABLE Users (
 	uid				SERIAL PRIMARY KEY,
 	uname 			TEXT,
 	avatar			blob,
+    email           TEXT NOT NULL UNIQUE,
+    pwd             VARCHAR,
     favorMovies     INT ARRAY
 );
 
