@@ -10,7 +10,7 @@
 			"name": "POST",
 			"item": [
 				{
-					"name": "Cerate User (local sign in)",
+					"name": "Create User (local sign in)",
 					"event": [
 						{
 							"listen": "prerequest",
@@ -214,7 +214,7 @@
 					]
 				},
 				{
-					"name": "Cerate User (oauth sign in)",
+					"name": "Create User (oauth sign in)",
 					"event": [
 						{
 							"listen": "prerequest",
