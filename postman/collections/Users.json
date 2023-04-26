@@ -10,7 +10,7 @@
 			"name": "POST",
 			"item": [
 				{
-					"name": "Cerate User",
+					"name": "Cerate User (local sign in)",
 					"event": [
 						{
 							"listen": "prerequest",
@@ -32,7 +32,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"name\": \"hrl's friend3\"\n}",
+							"raw": "{\n    \"name\": \"andrew\",\n    \"email\": \"alee14@bu.edu\",\n    \"password\": \"12345\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -48,18 +48,18 @@
 								"user"
 							]
 						},
-						"description": "To create a user\n\nRequired Input Field:\n\n- name: user’s name\n    \n\nOptional input Field:\n\n- avatar: photo of the user\n    \n\nOUTPUT:\n\n- id: this user’s unique id"
+						"description": "To create a user\n\nRequired Input Field:\n\n- name: user’s name\n- email: user's email\n- password: user's password (don't hash the input, the api will hash the value.)\n    \n\nOptional input Field:\n\n- avatar: photo of the user\n    \n\nNOTE: need to convert it to binary and send into JSON in a string format.\n\nOUTPUT:\n\n- success: true/false\n    - If true:\n        - id: this user’s unique id\n    - If false,\n        - message: error message"
 					},
 					"response": [
 						{
-							"id": "964d30c3-6246-4073-8347-1b660b3bbdbb",
-							"name": "Cerate User",
+							"id": "1dfe20af-96d5-4247-b04b-63bae4617c5e",
+							"name": "Cerate User (success example)",
 							"originalRequest": {
 								"method": "POST",
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"name\": \"hrl's friend3\"\n}",
+									"raw": "{\n    \"name\": \"andrew\",\n    \"email\": \"alee14@bu.edu\",\n    \"password\": \"12345\"\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -74,8 +74,7 @@
 									"path": [
 										"user"
 									]
-								},
-								"description": "To create a user\n\nRequired Input Field:\n\n- name: user’s name\n    \n\nOptional input Field:\n\n- avatar: photo of the user\n    \n\nOUTPUT:\n\n- id: this user’s unique id"
+								}
 							},
 							"status": "OK",
 							"code": 200,
@@ -87,7 +86,7 @@
 								},
 								{
 									"key": "Date",
-									"value": "Sat, 22 Apr 2023 20:53:05 GMT"
+									"value": "Wed, 26 Apr 2023 03:28:26 GMT"
 								},
 								{
 									"key": "Content-Type",
@@ -95,7 +94,7 @@
 								},
 								{
 									"key": "Content-Length",
-									"value": "26"
+									"value": "41"
 								},
 								{
 									"key": "Connection",
@@ -103,17 +102,17 @@
 								}
 							],
 							"cookie": [],
-							"body": "{\n    \"id\": 858935739108261889\n}"
+							"body": "{\n    \"id\": 859862816866729985,\n    \"success\": true\n}"
 						},
 						{
-							"id": "fc2efe60-7b2f-4ef0-8539-6f6d81faecf6",
-							"name": "Cerate User with avatar",
+							"id": "e96fbe5d-d687-4a0f-b294-37ea2571610a",
+							"name": "Cerate User (failed example)",
 							"originalRequest": {
 								"method": "POST",
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"name\": \"hrl's friend3\"\n}",
+									"raw": "{\n    \"name\": \"andrew\",\n    \"email\": \"alee14@bu.edu\",\n    \"password\": \"12345\"\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -141,7 +140,7 @@
 								},
 								{
 									"key": "Date",
-									"value": "Sat, 22 Apr 2023 21:08:38 GMT"
+									"value": "Wed, 26 Apr 2023 03:28:50 GMT"
 								},
 								{
 									"key": "Content-Type",
@@ -149,7 +148,7 @@
 								},
 								{
 									"key": "Content-Length",
-									"value": "26"
+									"value": "160"
 								},
 								{
 									"key": "Connection",
@@ -157,7 +156,211 @@
 								}
 							],
 							"cookie": [],
-							"body": "{\n    \"id\": 858938797350584321\n}"
+							"body": "{\n    \"message\": \"Error: duplicate key value violates unique constraint \\\"users_email_key\\\"\\nDETAIL:  Key (email)=('alee14@bu.edu') already exists.\",\n    \"success\": false\n}"
+						},
+						{
+							"id": "2b6a865a-8430-4746-9b80-639a3d450de0",
+							"name": "Cerate User with Avatar",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"hrl\",\n    \"email\": \"hrl@bu.edu\",\n    \"password\": \"12345\",\n    \"avatar\": 12345666\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{backendURL}}/user",
+									"host": [
+										"{{backendURL}}"
+									],
+									"path": [
+										"user"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "Werkzeug/2.2.3 Python/3.10.0"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 26 Apr 2023 03:27:46 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "41"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": 859862683280310273,\n    \"success\": true\n}"
+						}
+					]
+				},
+				{
+					"name": "Cerate User (oauth sign in)",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "5d75601c-26aa-498c-8abb-8bee39a1376a",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "ee294733-03c0-4fc2-9a9d-52a030724e38",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\": 23456643,\n    \"name\": \"Minos's friend\",\n    \"email\": \"minosg@email\",\n    \"avatar\": 12345666\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{backendURL}}/oauthuser",
+							"host": [
+								"{{backendURL}}"
+							],
+							"path": [
+								"oauthuser"
+							]
+						},
+						"description": "To create a user\n\nRequired Input Field:\n\n- id: the unique oauth id token\n    - NOTE: with a very small probability, the id token can colide with a local user's id. In this case, database will throw a Unique constraint violation error.\n- name: user’s name\n- email: user's email\n    \n\nOptional input Field:\n\n- avatar: photo of the user\n    \n\nNOTE: need to convert it to binary and send into JSON in a string format.\n\nOUTPUT:\n\n- success: true/false\n    - If true:\n        - id: this user’s unique id\n    - If false,\n        - message: error message"
+					},
+					"response": [
+						{
+							"id": "bf59b14b-e226-4277-ad8a-b5c13bb01287",
+							"name": "Cerate User (oauth sign in)",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"id\": 23456643,\n    \"name\": \"Minos's friend\",\n    \"email\": \"minosg@email\",\n    \"avatar\": 12345666\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{backendURL}}/oauthuser",
+									"host": [
+										"{{backendURL}}"
+									],
+									"path": [
+										"oauthuser"
+									]
+								},
+								"description": "To create a user\n\nRequired Input Field:\n\n- id: the unique oauth id token\n    - NOTE: with a very small probability, the id token can colide with a local user's id. In this case, database will throw a Unique constraint violation error.\n- name: user’s name\n- email: user's email\n    \n\nOptional input Field:\n\n- avatar: photo of the user\n    \n\nNOTE: need to convert it to binary and send into JSON in a string format.\n\nOUTPUT:\n\n- success: true/false\n    - If true:\n        - id: this user’s unique id\n    - If false,\n        - message: error message"
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "Werkzeug/2.2.3 Python/3.10.0"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 26 Apr 2023 04:31:16 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "31"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": 12345667,\n    \"success\": true\n}"
+						},
+						{
+							"id": "a2583d47-4d88-453e-ab70-5766fbd18a49",
+							"name": "Cerate User with avatar (oauth sign in)",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"id\": 23456643,\n    \"name\": \"Minos's friend\",\n    \"email\": \"minosg@email\",\n    \"avatar\": 12345666\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{backendURL}}/oauthuser",
+									"host": [
+										"{{backendURL}}"
+									],
+									"path": [
+										"oauthuser"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "Werkzeug/2.2.3 Python/3.10.0"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 26 Apr 2023 04:33:12 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "31"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": 23456643,\n    \"success\": true\n}"
 						}
 					]
 				},
@@ -610,7 +813,7 @@
 			"name": "GET",
 			"item": [
 				{
-					"name": "Get User by ID",
+					"name": "Get User",
 					"event": [
 						{
 							"listen": "prerequest",
@@ -632,7 +835,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"id\": 859066469730942977\n}",
+							"raw": "{\n    \"email\": \"alee14@bu.edu\",\n    \"password\": \"12345\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -652,14 +855,14 @@
 					},
 					"response": [
 						{
-							"id": "403028b0-ffc3-44ad-8967-0c5494df7619",
-							"name": "Cerate User Copy",
+							"id": "798520c3-3c82-41b7-9cdc-f709c381a420",
+							"name": "Get User by ID",
 							"originalRequest": {
 								"method": "GET",
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"id\": 859066469730942977\n}",
+									"raw": "{\n    \"id\": 859862683280310273\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -674,8 +877,7 @@
 									"path": [
 										"user"
 									]
-								},
-								"description": "To create a user\n\nRequired Input Field:\n\n- id: user’s id\n    \n\nOutput:\n\n- User's detail\n    - NOTE: avatar is converted to string format because of JSON limitation."
+								}
 							},
 							"status": "OK",
 							"code": 200,
@@ -687,7 +889,7 @@
 								},
 								{
 									"key": "Date",
-									"value": "Sat, 22 Apr 2023 20:58:51 GMT"
+									"value": "Wed, 26 Apr 2023 03:38:16 GMT"
 								},
 								{
 									"key": "Content-Type",
@@ -695,7 +897,7 @@
 								},
 								{
 									"key": "Content-Length",
-									"value": "75"
+									"value": "115"
 								},
 								{
 									"key": "Connection",
@@ -703,7 +905,114 @@
 								}
 							],
 							"cookie": [],
-							"body": "{\n    \"avatar\": null,\n    \"favorite_movie\": null,\n    \"id\": 858935639547412481,\n    \"name\": \"hrl\"\n}"
+							"body": "{\n    \"avatar\": \"12345666\",\n    \"email\": \"hrl@bu.edu\",\n    \"favorite_movie\": null,\n    \"found\": true,\n    \"id\": 859862683280310273,\n    \"name\": \"hrl\"\n}"
+						},
+						{
+							"id": "db81d8a6-76af-489a-92a0-c804ef9c0567",
+							"name": "Get User with email and password",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"email\": \"alee14@bu.edu\",\n    \"password\": \"12345\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": ""
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "Werkzeug/2.2.3 Python/3.10.0"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 26 Apr 2023 04:07:11 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "117"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"avatar\": \"None\",\n    \"email\": \"alee14@bu.edu\",\n    \"favorite_movie\": null,\n    \"found\": true,\n    \"id\": 859870337806041089,\n    \"name\": \"andrew\"\n}"
+						},
+						{
+							"id": "626406cf-15e7-405e-aa9b-d5898a4458d9",
+							"name": "Get User (incorrect password)",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"email\": \"hrl@bu.edu\",\n    \"password\": \"123456\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{backendURL}}/user",
+									"host": [
+										"{{backendURL}}"
+									],
+									"path": [
+										"user"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "Werkzeug/2.2.3 Python/3.10.0"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 26 Apr 2023 03:44:29 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "66"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"found\": false,\n    \"message\": \"User doesn't exist/password is wrong.\"\n}"
 						}
 					]
 				},
