@@ -21,3 +21,8 @@ Dependency: flask, flask-ngrok, psycopg[binary]
 # Backend Architecture
 
 ![](https://i.imgur.com/prZvAuV.png)
+
+# [CockroachDB ER diagram (Click to view)](https://docs.google.com/drawings/d/1RlKlOd8FNrVaUYEe0mKbFvWQwE01w1iYAO5jRxI3yEI/edit?usp=sharing)
+
+Screenshot at Apr 26 (maybe out of date. Please use the link above to view the most updated ER):
+![](https://i.imgur.com/OSZbOsV.png)
