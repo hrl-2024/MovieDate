@@ -21,7 +21,7 @@ const Login = ({navigation}) => {
   }
 
     var requestOptions = {
-      method: 'POST',
+      method: 'POST', 
       body: JSON.stringify(raw),
       redirect: 'follow'
     };
