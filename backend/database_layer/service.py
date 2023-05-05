@@ -49,7 +49,7 @@ def insert_oauthuser(connection, id, name, email, avatar):
         except psycopg.errors.UniqueViolation as e:
             connection.rollback()
             return False, f"Error: {e}"
-
+        
     return True, id[0]
 
 def getUserById(connection, id):

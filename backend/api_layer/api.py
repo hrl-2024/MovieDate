@@ -71,6 +71,11 @@ def is_valid_date(date_string):
 
     return False
 
+@app.route('/gettoken', methods=['GET'])
+def getMovieDBAccessToken():
+    return {"token": credential_data["MovieDB_AT"]}
+
+
 @app.route('/user', methods=['POST'])
 def insert_user():
 
