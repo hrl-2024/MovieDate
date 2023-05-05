@@ -1,5 +1,6 @@
 // Home.js
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+
 import {
   View,
   Text,
@@ -9,23 +10,45 @@ import {
   StyleSheet,
 } from 'react-native';
 
-const data = [
-  { id: '1', uri: 'https://posters.movieposterdb.com/10_06/2010/1375666/s_1375666_07030c72.jpg'},
-  { id: '1', uri: 'https://posters.movieposterdb.com/23_01/2010/1790736/s_inception-the-cobol-job-movie-poster_15eafd4a.jpg'},
-  { id: '1', uri: 'https://posters.movieposterdb.com/23_02/2014/7321322/l_inception-movie-poster_871102ec.jpg'},
-  { id: '1', uri: 'https://posters.movieposterdb.com/19_12/2015/8269586/s_8269586_8a44c5d4.jpg'},
-  { id: '1', uri: 'https://posters.movieposterdb.com/23_02/2014/5735302/s_starlight-inception-movie-poster_019fe54e.jpg'},
-  // Add your image sources here, for example:
-  // { id: '1', uri: 'https://via.placeholder.com/150' },
-  // { id: '2', uri: 'https://via.placeholder.com/150' },
-  // ...
-];
+const data = [];
 
 const renderItem = ({ item }) => (
   <Image source={{ uri: item.uri }} style={styles.galleryImage} />
 );
 
 const Home = () => {
+  const [token, setToken] = useState('');
+  const [movieData, setMovieData] = useState({});
+
+  useEffect(() => {
+    fetch("http://127.0.0.1:5/gettoken")
+      .then(response => response.text())
+      .then(result => {
+        console.log(JSON.parse(result)["token"]);
+        setToken(JSON.parse(result)["token"])
+      })
+      .catch(error => console.log('error', error));
+  }, []);
+
+  useEffect(() => {
+    if (token) {
+      fetch(`https://api.themoviedb.org/3/movie/popular?api_key=${token}&language=en-US&page=1`)
+      .then(response => response.json())
+      .then(data => {
+        console.log(data);
+        setMovieData(data)
+      })
+      .catch(error => console.error(error));
+    }
+  },[])
+  console.log(movieData)
+  for (let movie in movieData["results"]) {
+    data.push({id: `${movieData["id"]}`, uri: `https://image.tmdb.org/t/p/w500/${movie["backdrop_path"]}`})
+    console.log(`https://image.tmdb.org/t/p/w500/${movie["backdrop_path"]}`)
+  }
+  console.log("EMMMME")
+  console.log(data)
+
   const [search, setSearch] = useState('');
 
   return (
@@ -49,14 +72,7 @@ const Home = () => {
         showsHorizontalScrollIndicator={false}
         contentContainerStyle={styles.gallery}
       />
-      <FlatList
-        data={data}
-        renderItem={renderItem}
-        keyExtractor={(item) => item.id}
-        horizontal
-        showsHorizontalScrollIndicator={false}
-        contentContainerStyle={styles.gallery}
-      />
+
     </View>
   );
 };

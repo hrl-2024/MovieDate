@@ -71,6 +71,11 @@ def is_valid_date(date_string):
 
     return False
 
+@app.route('/gettoken', methods=['GET'])
+def getMovieDBAccessToken():
+    return {"token": credential_data["MovieDB_AT"]}
+
+
 @app.route('/user', methods=['POST'])
 def insert_user():
 
@@ -698,4 +703,4 @@ def ensure_pythonhashseed(seed='0'):
 if __name__ == '__main__':
     # app.run(debug=True)
     ensure_pythonhashseed(credential_data["password_hash_key"])  # to ensure hash value stays consistent across all sessions and servers
-    app.run(port=5002)
+    app.run(port=5)

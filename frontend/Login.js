@@ -9,16 +9,14 @@ const Login = ({navigation}) => {
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [passwordConfirmation, setPasswordConfirmation] = useState('');
 
   const register = () => {
     
     var raw = {
-      "id": 23456643,
-      "name": "Minos's friend",
-      "email": "minosg@email",
-      "avatar": 12345666
-  }
+    "name": "Lewww1",
+    "email": "bingww@bu.edu1",
+    "password": "1234567w1"
+}
 
     var requestOptions = {
       method: 'POST', 
@@ -26,9 +24,15 @@ const Login = ({navigation}) => {
       redirect: 'follow'
     };
 
-    fetch("http://127.0.0.1:5002/oauthuser", requestOptions)
+    fetch("http://127.0.0.1:5/user", requestOptions)
       .then(response => response.text())
-      .then(result => console.log(result))
+      .then(result => {
+        console.log(result);
+        if (JSON.parse(result)["success"]) {
+          console.log("Register Successful")
+          navigation.navigate('Home');
+        }
+      })
       .catch(error => console.log('error', error));
 };
 
@@ -36,7 +40,7 @@ const Login = ({navigation}) => {
 
   const Stack = createStackNavigator();
   const handleLogin = () => {
-    navigation.navigate('Home');
+    navigation.navigate('Register');
   };
   const handleMovieDetail = () => {
     navigation.navigate('MovieDetail');
@@ -71,21 +75,12 @@ const Login = ({navigation}) => {
           secureTextEntry
         />
 
-        <Text style={styles.label}>Confirm Password</Text>
-        <TextInput
-          style={styles.input}
-          onChangeText={setPasswordConfirmation}
-          value={passwordConfirmation}
-          placeholder="Confirm your password"
-          secureTextEntry
-        />
-
         <TouchableOpacity style={styles.button} onPress={register}>
-          <Text style={styles.buttonText}>Register</Text>
+          <Text style={styles.buttonText}>Login</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.button} onPress={handleLogin}>
-          <Text style={styles.buttonText}>Login</Text>
+        <TouchableOpacity style={styles.altbutton} onPress={handleLogin}>
+          <Text style={styles.buttonText}>Create an account</Text>
         </ TouchableOpacity>
       </View>
     </SafeAreaView>
@@ -107,7 +102,7 @@ const styles = StyleSheet.create({
     marginLeft: 4,
   },
   input: {
-    height: 40,
+    height: 30,
     backgroundColor: 'white',
     paddingHorizontal: 10,
     marginBottom: 15,
@@ -123,6 +118,16 @@ const styles = StyleSheet.create({
     borderColor: 'white',
     borderWidth: 1,
   },
+  altbutton: {
+    backgroundColor: 'black',
+    borderRadius: 5,
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 10,
+    marginBottom: 15,
+
+  },
+  
   buttonText: {
     color: 'white',
     fontSize: 16,
@@ -132,7 +137,7 @@ const styles = StyleSheet.create({
     height: 250,
     resizeMode: 'contain',
     alignSelf: 'center',
-    marginBottom: 15,
+    marginBottom: 0,
   },
 });
 

@@ -46,8 +46,11 @@ def insert_oauthuser(connection, id, name, email, avatar):
             cur.execute(query)
             id = cur.fetchone()
             connection.commit()
+            print("jjjj")
+            print(id[0])
         except psycopg.errors.UniqueViolation as e:
             connection.rollback()
+            
             return False, f"Error: {e}"
 
     return True, id[0]
