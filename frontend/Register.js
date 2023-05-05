@@ -4,28 +4,39 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import Home from './Home';
 import MovieDetail from './MovieDetail';
+import { signUpWithEmail } from './Firebase';
 
-const Register = ({navigation}) => {
+
+const Register = ({ navigation }) => {
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [passwordConfirmation, setPasswordConfirmation] = useState('');
 
   const register = () => {
-    
+
     var raw = {
-      "id": 41223,
-      "name": "32232133",
-      "email": "gy122g@bu.edu1",
-      "avatar": 2132221231,
-      "password": "212423241"
-  }
+      "id": fnv32a(username),
+      "name": username,
+      "email": email,
+      "avatar": fnv32a(email),
+      "password": password
+    }
 
     var requestOptions = {
-      method: 'POST', 
+      method: 'POST',
       body: JSON.stringify(raw),
       redirect: 'follow'
     };
+    signUpWithEmail(username, email, password)
+      .then(() => {
+        console.log("Firebase: User Auth register SUCCESS")
+      })
+      .catch((error) => {
+        console.log("Firebase: User Auth register FAIL")
+      });
+
+
 
     fetch("http://127.0.0.1:5/oauthuser", requestOptions)
       .then(response => response.text())
@@ -37,7 +48,17 @@ const Register = ({navigation}) => {
         }
       })
       .catch(error => console.log('error', error));
-};
+  };
+function fnv32a(str) {
+  let hash = 0x811c9dc5;
+
+  for (let i = 0; i < str.length; i++) {
+    hash ^= str.charCodeAt(i);
+    hash += (hash << 1) + (hash << 4) + (hash << 7) + (hash << 8) + (hash << 24);
+  }
+
+  return hash >>> 0; // Use unsigned right shift to convert to a positive integer
+}
 
 
   const Stack = createStackNavigator();

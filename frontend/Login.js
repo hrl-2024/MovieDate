@@ -4,6 +4,8 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import Home from './Home';
 import MovieDetail from './MovieDetail';
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { signInWithEmail } from "./Firebase";
 
 const Login = ({navigation}) => {
   const [username, setUsername] = useState('');
@@ -13,9 +15,9 @@ const Login = ({navigation}) => {
   const register = () => {
     
     var raw = {
-    "name": "Lewww1",
-    "email": "bingww@bu.edu1",
-    "password": "1234567w1"
+    "name": username,
+    "email": email,
+    "password": password
 }
 
     var requestOptions = {
@@ -23,6 +25,14 @@ const Login = ({navigation}) => {
       body: JSON.stringify(raw),
       redirect: 'follow'
     };
+    signInWithEmail(email, password)
+      .then((user) => {
+        console.log("Firebase: User Auth login SUCCESS");
+      })
+      .catch((error) => {
+        console.log("Firebase: User Auth login FAIL", error);
+      });
+      
 
     fetch("http://127.0.0.1:5/user", requestOptions)
       .then(response => response.text())
