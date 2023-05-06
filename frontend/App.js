@@ -7,15 +7,6 @@ import Login from './Login';
 import Register from './Register';
 
 const App = () => {
-  const [username, setUsername] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [passwordConfirmation, setPasswordConfirmation] = useState('');
-
-  const register = () => {
-    // Implement registration logic here
-  };
-
 
   const Stack = createStackNavigator();
   return (
