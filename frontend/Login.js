@@ -6,13 +6,13 @@ import Home from './Home';
 import MovieDetail from './MovieDetail';
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { signInWithEmail } from "./Firebase";
-
+import { Alert } from 'react-native';
 const Login = ({navigation}) => {
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const register = () => {
+  const login = () => {
     
     var raw = {
     "name": username,
@@ -28,22 +28,37 @@ const Login = ({navigation}) => {
     signInWithEmail(email, password)
       .then((user) => {
         console.log("Firebase: User Auth login SUCCESS");
+        navigation.navigate('Home');
       })
       .catch((error) => {
         console.log("Firebase: User Auth login FAIL", error);
+        Alert.alert(
+          'Error',
+          'Invalid Login Details.',
+          [
+            {
+              text: 'OK',
+              onPress: () => console.log('OK pressed'),
+            },
+          ],
+          { cancelable: false }
+        );
+        console.error(error);
       });
-      
 
-    fetch("http://127.0.0.1:5/user", requestOptions)
+      fetch("http://127.0.0.1:5002/user", requestOptions)
       .then(response => response.text())
       .then(result => {
-        console.log(result);
+        console.log("bing",result);
         if (JSON.parse(result)["success"]) {
-          console.log("Register Successful")
           navigation.navigate('Home');
+          console.log("Login Successful")
         }
       })
       .catch(error => console.log('error', error));
+      
+
+
 };
 
 
@@ -85,7 +100,7 @@ const Login = ({navigation}) => {
           secureTextEntry
         />
 
-        <TouchableOpacity style={styles.button} onPress={register}>
+        <TouchableOpacity style={styles.button} onPress={login}>
           <Text style={styles.buttonText}>Login</Text>
         </TouchableOpacity>
 

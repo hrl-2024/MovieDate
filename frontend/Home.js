@@ -1,54 +1,58 @@
 // Home.js
 import React, { useState, useEffect } from 'react';
+import { useNavigation } from '@react-navigation/native';
+import { TouchableOpacity } from 'react-native';
 
+import {createStackNavigator} from '@react-navigation/stack';
 import {
   View,
-  Text,
   Image,
   TextInput,
   FlatList,
   StyleSheet,
 } from 'react-native';
 
-const data = [];
 
-const renderItem = ({ item }) => (
-  <Image source={{ uri: item.uri }} style={styles.galleryImage} />
-);
 
-const Home = () => {
+
+const Home = () => { 
+  const navigation = useNavigation();
+  const handleImagePress = (id) => {
+    // Navigate to a new screen with the movie ID
+    navigation.navigate('MovieDetails', { id });
+  }; 
+  const renderItem = ({ item }) => (
+    <TouchableOpacity onPress={() => handleImagePress(item.id)}>
+    <Image source={{ uri: item.uri }} style={styles.galleryImage} />
+    </TouchableOpacity>
+  );
+  const data = [];
   const [token, setToken] = useState('');
   const [movieData, setMovieData] = useState({});
 
   useEffect(() => {
-    fetch("http://127.0.0.1:5/gettoken")
+    fetch("http://127.0.0.1:5002/gettoken")
       .then(response => response.text())
       .then(result => {
         console.log(JSON.parse(result)["token"]);
         setToken(JSON.parse(result)["token"])
+        fetch(`https://api.themoviedb.org/3/movie/popular?api_key=${token}&language=en-US&page=1`)
+        .then(response => response.json())
+        .then(data => {
+          setMovieData(data)
+        })
+        .catch(error => console.error(error));
       })
       .catch(error => console.log('error', error));
   }, []);
-
-  useEffect(() => {
-    if (token) {
-      fetch(`https://api.themoviedb.org/3/movie/popular?api_key=${token}&language=en-US&page=1`)
-      .then(response => response.json())
-      .then(data => {
-        console.log(data);
-        setMovieData(data)
-      })
-      .catch(error => console.error(error));
-    }
-  },[])
-  console.log(movieData)
+  
   for (let movie in movieData["results"]) {
-    data.push({id: `${movieData["id"]}`, uri: `https://image.tmdb.org/t/p/w500/${movie["backdrop_path"]}`})
-    console.log(`https://image.tmdb.org/t/p/w500/${movie["backdrop_path"]}`)
+    console.log(movieData["results"][movie])
+    data.push({id: `${movieData['results'][movie]["id"]}`, uri: `https://image.tmdb.org/t/p/w500${String(movieData['results'][movie]["backdrop_path"])}`, title: movieData['results'][movie]["original_title"]})
+    console.log(`https://image.tmdb.org/t/p/w500${String(movieData['results'][movie]["backdrop_path"])}`)
   }
-  console.log("EMMMME")
-  console.log(data)
 
+ 
   const [search, setSearch] = useState('');
 
   return (
@@ -72,7 +76,6 @@ const Home = () => {
         showsHorizontalScrollIndicator={false}
         contentContainerStyle={styles.gallery}
       />
-
     </View>
   );
 };

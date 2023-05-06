@@ -5,7 +5,7 @@ import {createStackNavigator} from '@react-navigation/stack';
 import Home from './Home';
 import MovieDetail from './MovieDetail';
 import { signUpWithEmail } from './Firebase';
-
+import { Alert } from 'react-native';
 
 const Register = ({ navigation }) => {
   const [username, setUsername] = useState('');
@@ -31,23 +31,38 @@ const Register = ({ navigation }) => {
     signUpWithEmail(username, email, password)
       .then(() => {
         console.log("Firebase: User Auth register SUCCESS")
+        fetch("http://127.0.0.1:5002/oauthuser", requestOptions)
+        .then(response => response.text())
+        .then(result => {
+          console.log(result);
+          if (JSON.parse(result)["success"]) {
+            console.log("Register Successful")
+            navigation.navigate('Home');
+          }
+        })
+        .catch(error => console.log('error', error));
+        
       })
       .catch((error) => {
         console.log("Firebase: User Auth register FAIL")
-      });
+        Alert.alert(
+          'Error',
+          'Invalid Register Details.',
+          [
+            {
+              text: 'OK',
+              onPress: () => console.log('OK pressed'),
+            },
+          ],
+          { cancelable: false }
+        );
+        console.error(error);
+      }); 
 
 
 
-    fetch("http://127.0.0.1:5/oauthuser", requestOptions)
-      .then(response => response.text())
-      .then(result => {
-        console.log(result);
-        if (JSON.parse(result)["success"]) {
-          console.log("Register Successful")
-          navigation.navigate('Home');
-        }
-      })
-      .catch(error => console.log('error', error));
+
+    
   };
 function fnv32a(str) {
   let hash = 0x811c9dc5;
@@ -65,9 +80,7 @@ function fnv32a(str) {
   const handleRegister = () => {
     navigation.navigate("Login");
   };
-  const handleMovieDetail = () => {
-    navigation.navigate('MovieDetail');
-  };
+
   return (
     <SafeAreaView style={styles.container}>
       <Image source={require('./Rectangle5.png')} style={styles.logo} />
