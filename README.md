@@ -1,7 +1,7 @@
 # 411-A5-1
 CS411 Team A5 Repo
 
-# [Most updated implemetation walkthrough (May 5th)](https://youtu.be/v_cFCgTIplY)
+# [Most updated implemetation walkthrough (May 5th)](https://drive.google.com/file/d/1FFnVdCbBdbWcYdkkEOzYx6B90Vuo8uSc/view?usp=sharing)
 
 # MovieDate
 Overview: social media platform focused on movies. Users can recommand a movie, talk about the movie, and plan for a watch party with their friends.
