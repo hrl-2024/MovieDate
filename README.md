@@ -1,12 +1,35 @@
-# 411-A5-1
-CS411 Team A5 Repo
-
-# [Most updated implemetation walkthrough (May 5th)](https://drive.google.com/file/d/1FFnVdCbBdbWcYdkkEOzYx6B90Vuo8uSc/view?usp=sharing)
-
 # MovieDate
-Overview: social media platform focused on movies. Users can recommand a movie, talk about the movie, and plan for a watch party with their friends.
+MovieDate is a social media platform focused on movie lovers.
 
-## Requirements:
+After creating a MovieDate account, a user can:
+1. Search for specific movies.
+2. Discover where those movies are available (on multiple streaming platforms).
+3. Interact with movies by:
+   - Watching trailers.
+   - Adding movies to favorites.
+   - Writing reviews or posts to friends' feed.
+   - Sharing movies with friends.
+   - Adding movies to their To-Watch list.
+   - Starting movie watch parties.
+4. Access their profile page to view and edit their bio, favorite movies, To-Watch list, upcoming watch parties, and movie reviews.
+
+## How to run the project:
+This project is split into two folders: `Backend` and `Frontend`.
+1. `Backend` instruction is in `Backend` folder's readme. It consists everything you need to know on its architecture and how to get the server running.
+2. Install `npx` and `Node.js` if you haven't
+3. Run the following command to get the React Native App working:
+```
+cd frontend 
+npx expo start
+```
+
+
+---------------------------------------------------------
+Below consists of more implenmentation details for developers if you are curious to read.
+
+Here's the [most updated implemetation project walkthrough (May 5th)](https://drive.google.com/file/d/1FFnVdCbBdbWcYdkkEOzYx6B90Vuo8uSc/view?usp=sharing).
+
+## Backend Features:
 - Database:
     - Store user's preference - i.e country
     - Store the user's favorite movies
